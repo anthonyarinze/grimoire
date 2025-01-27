@@ -1,14 +1,18 @@
+"use client";
+
 import React from "react";
 import { Book } from "../lib/types";
 import Image from "next/image";
 import SearchItemTitle from "./searchitemtitle";
+import { useAppDispatch } from "../lib/hooks";
+import { setSelectedBook } from "../lib/slices/searchSlice";
 
 interface Props {
   results: Book[];
 }
 
 export default function SearchItem({ results }: Props) {
-  console.log("🚀 ~ SearchItem ~ results:", results);
+  const dispatch = useAppDispatch();
   return (
     <div className="flex flex-col gap-2">
       <ul className="list-none p-0 m-0">
@@ -16,6 +20,7 @@ export default function SearchItem({ results }: Props) {
           <li
             key={book.id}
             className="flex items-start gap-2 p-2 content-start"
+            onClick={() => dispatch(setSelectedBook(book))}
           >
             <Image
               src={book.volumeInfo.imageLinks?.smallThumbnail || null}
