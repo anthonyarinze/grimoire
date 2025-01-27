@@ -1,26 +1,37 @@
 import React from "react";
+import { Book } from "../lib/types";
+import Image from "next/image";
+import SearchItemTitle from "./searchitemtitle";
 
 interface Props {
-  error: [];
-  results: [];
+  results: Book[];
 }
 
-export default function SearchItem({ error, results }: Props) {
+export default function SearchItem({ results }: Props) {
+  console.log("🚀 ~ SearchItem ~ results:", results);
   return (
-    <div>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-      {results.length > 0 && (
-        <ul className=" mt-8 bg-white shadow-md rounded-md">
-          {results.map((book) => (
-            <li key={book.id} className="p-2 border-b last:border-none">
-              <h3 className="font-bold">{book.volumeInfo.title}</h3>
-              <p className="text-sm text-gray-500">
-                {book.volumeInfo.authors?.join(", ") || "Unknown Author"}
-              </p>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="flex flex-col gap-2">
+      <ul className="list-none p-0 m-0">
+        {results?.map((book) => (
+          <li
+            key={book.id}
+            className="flex items-start gap-2 p-2 content-start"
+          >
+            <Image
+              src={book.volumeInfo.imageLinks?.smallThumbnail || null}
+              alt={book.volumeInfo.title}
+              width={60}
+              height={70}
+              className=" rounded min-h-[70px] min-w-[60px]"
+            />
+            <SearchItemTitle
+              title={book.volumeInfo.title}
+              author={book.volumeInfo.authors}
+              isMature={book.volumeInfo.maturityRating}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
