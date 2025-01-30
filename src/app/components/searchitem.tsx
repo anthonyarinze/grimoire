@@ -19,7 +19,7 @@ export default function SearchItem({ results }: Props) {
         {results?.map((book) => (
           <li
             key={book.id}
-            className="flex items-start gap-2 p-2 content-start"
+            className="flex items-start gap-2 p-2 content-start overflow-hidden hover:bg-gray-200 cursor-pointer"
             onClick={() => dispatch(setSelectedBook(book))}
           >
             <Image

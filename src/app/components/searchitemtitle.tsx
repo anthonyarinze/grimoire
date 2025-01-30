@@ -12,7 +12,9 @@ export default function SearchItemTitle({ title, author, isMature }: Props) {
   return (
     <div className="flex flex-col">
       <div className="flex items-center space-x-2 ">
-        <h3 className="text-md font-semibold truncate">{title}</h3>
+        <h3 className="text-md font-semibold line-clamp-2 overflow-hidden">
+          {title}
+        </h3>
         {isMature === "MATURE" && (
           <Image src={mature} alt="mature" height={20} width={20} />
         )}

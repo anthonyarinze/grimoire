@@ -7,9 +7,9 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      setSearchQuery(query);
+      setSearchQuery(query.trim()); // Ensure searchQuery updates
     }
   };
 
@@ -24,11 +24,14 @@ export default function SearchBar() {
           placeholder="Search..."
           className="bg-gray-200 w-[14.5rem] border-gray-300 border p-2 rounded-md text-md"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            if (searchQuery) setSearchQuery(""); // Reset search when typing
+          }}
+          onKeyDown={handleKeyDown} // Trigger search only on Enter
         />
       </div>
-      <SearchDropdown query={searchQuery} />
+      {searchQuery && <SearchDropdown query={searchQuery} />}
     </div>
   );
 }

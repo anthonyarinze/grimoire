@@ -38,3 +38,16 @@ h6 {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
+@keyframes progress {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress 1.5s linear infinite;
+}
