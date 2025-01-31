@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SearchItem from "./searchitem";
-import { Book } from "../lib/types";
+import { Book } from "../../lib/types";
 import { useDebouncedCallback } from "use-debounce";
-import ProgressBar from "../ui/progressbar";
+import ProgressBar from "../../ui/progressbar";
 
 const fetchBooks = async (query: string): Promise<{ items: Book[] }> => {
   const response = await fetch(

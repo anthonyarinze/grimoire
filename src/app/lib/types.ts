@@ -4,6 +4,7 @@ export interface Book {
   volumeInfo: {
     title: string;
     authors?: string[]; // Optional, as some books may not have authors listed
+    averageRating?: number; // Optional
     publisher?: string; // Optional
     publishedDate?: string; // Optional
     description?: string; // Optional
@@ -11,6 +12,7 @@ export interface Book {
       type: string;
       identifier: string;
     }[];
+    infoLink: string;
     readingModes?: {
       text: boolean;
       image: boolean;
@@ -19,6 +21,7 @@ export interface Book {
     printType?: string; // Optional
     categories?: string[]; // Optional
     maturityRating?: string; // Optional
+    pageCount?: number; // Optional
     allowAnonLogging?: boolean;
     contentVersion?: string;
     panelizationSummary?: {

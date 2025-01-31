@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { Book } from "../lib/types";
+import { Book } from "../../lib/types";
 import Image from "next/image";
-import SearchItemTitle from "./searchitemtitle";
-import { useAppDispatch } from "../lib/hooks";
-import { setSelectedBook } from "../lib/slices/searchSlice";
+import SearchItemDetails from "./searchitemdetails";
+import { useAppDispatch } from "../../lib/hooks";
+import { setSelectedBook } from "../../lib/slices/searchSlice";
 
 interface Props {
   results: Book[];
@@ -29,11 +29,15 @@ export default function SearchItem({ results }: Props) {
               height={70}
               className=" rounded min-h-[70px] min-w-[60px]"
             />
-            <SearchItemTitle
-              title={book.volumeInfo.title}
-              author={book.volumeInfo.authors}
-              isMature={book.volumeInfo.maturityRating}
-            />
+            <div className="w-full h-full space-y-4">
+              <SearchItemDetails
+                title={book.volumeInfo.title}
+                author={book.volumeInfo.authors}
+                isMature={book.volumeInfo.maturityRating}
+                rating={book.volumeInfo.averageRating}
+                pageCount={book.volumeInfo.pageCount}
+              />
+            </div>
           </li>
         ))}
       </ul>
