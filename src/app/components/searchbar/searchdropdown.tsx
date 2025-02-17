@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import SearchItem from "./searchitem";
 import { Book } from "../../lib/types";
 import { useDebouncedCallback } from "use-debounce";
-import ProgressBar from "../../ui/progressbar";
+import ProgressBar from "./progressbar";
 
 const fetchBooks = async (query: string): Promise<{ items: Book[] }> => {
   const response = await fetch(
@@ -57,7 +57,7 @@ export default function SearchDropdown({ query }: { query: string }) {
 
   return (
     isOpen && (
-      <div ref={dropdownRef} className="relative">
+      <div ref={dropdownRef} className="relative z-50">
         <div className="flex flex-col top-full z-50 list-none overflow-y-auto max-h-[300px] absolute rounded-sm bg-gray-100 shadow-md w-full scrollbar-hide">
           {isLoading ? (
             <ProgressBar />

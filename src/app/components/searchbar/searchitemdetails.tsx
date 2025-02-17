@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import mature from "../../../public/mature.svg";
+import mature from "../../../../public/mature.svg";
 import { BookOpen, Star } from "lucide-react";
 
 interface Props {

@@ -1,10 +1,10 @@
-import Header from "@/app/ui/header";
+import Carousel from "@/app/ui/carouselslider";
 import React from "react";
 
 export default function HomePage() {
   return (
     <main>
-      <Header />
+      <Carousel />
     </main>
   );
 }
