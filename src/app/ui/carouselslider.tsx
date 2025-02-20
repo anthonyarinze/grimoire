@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/autoplay";
 import { Book } from "../lib/types";
+import StackingBooksLoader from "../components/carousel/stackingbooksloader";
 
 const categories = [
   "fiction",
@@ -52,6 +55,7 @@ export default function PopularBooksCarousel() {
     [category: string]: Book[];
   }>({});
   const [loading, setLoading] = useState(true);
+  const swiper = useSwiper();
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -68,21 +72,27 @@ export default function PopularBooksCarousel() {
     loadBooks();
   }, []);
 
-  if (loading) return <p className="text-center">Loading recommendations...</p>;
+  if (loading) return <StackingBooksLoader />;
 
   return (
-    <div className="w-full max-w-4xl h-full my-5 shadow-md relative -z-50 rounded-md">
+    <>
       <Swiper
-        modules={[Pagination, Autoplay]}
-        spaceBetween={20}
+        modules={[Pagination, Autoplay, Navigation]}
+        grabCursor={true}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
         slidesPerView={1}
+        spaceBetween={10}
+        loop={true}
+        navigation={true}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 5000 }}
-        className="w-full"
+        className="w-full max-w-4xl h-full my-5 shadow-md relative -z-50 rounded-md"
       >
         {Object.entries(popularBooks).map(([category, books]) => (
           <SwiperSlide key={category} className="p-4  rounded-lg">
-            <h2 className="text-lg font-semibold mb-3">
+            <h2 className="text-lg font-semibold mb-3 text-black">
               Popular {category.charAt(0).toUpperCase() + category.slice(1)}{" "}
               Titles
             </h2>
@@ -99,7 +109,7 @@ export default function PopularBooksCarousel() {
                     height={130}
                     className="rounded shadow-md p-2 cursor-pointer -z-50"
                   />
-                  <p className="text-xs text-center mt-2">
+                  <p className="text-xs text-black text-center mt-2">
                     {book.volumeInfo.title}
                   </p>
                 </div>
@@ -108,6 +118,6 @@ export default function PopularBooksCarousel() {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </>
   );
 }
