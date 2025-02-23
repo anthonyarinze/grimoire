@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import { Book } from "../lib/types";
-import StackingBooksLoader from "../components/carousel/stackingbooksloader";
+import StackingBooksLoader from "./stackingbooksloader";
 
 const categories = [
   "fiction",
@@ -55,7 +55,6 @@ export default function PopularBooksCarousel() {
     [category: string]: Book[];
   }>({});
   const [loading, setLoading] = useState(true);
-  const swiper = useSwiper();
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -88,7 +87,7 @@ export default function PopularBooksCarousel() {
         loop={true}
         navigation={true}
         pagination={{ clickable: true }}
-        className="w-full max-w-4xl h-full my-5 shadow-md relative -z-50 rounded-md"
+        className="w-[95%] h-full m-5 shadow-md relative -z-50 rounded-md"
       >
         {Object.entries(popularBooks).map(([category, books]) => (
           <SwiperSlide key={category} className="p-4  rounded-lg">
