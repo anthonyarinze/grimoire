@@ -1,5 +1,6 @@
 "use client";
 
+import BookActions from "@/app/components/bookdetails/bookactions";
 import BookHeader from "@/app/components/bookdetails/bookheader";
 import { fetchBookDetails } from "@/app/lib/functions";
 import { useQuery } from "@tanstack/react-query";
@@ -25,6 +26,7 @@ export default function BookDetails() {
   return (
     <main className="m-2 p-3 w-[95%] text-black flex flex-col">
       <BookHeader book={book} />
+      <BookActions />
     </main>
   );
 }

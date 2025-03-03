@@ -12,7 +12,7 @@ export default function BookHeader({ book }: Props) {
   const { volumeInfo } = book;
 
   return (
-    <div className="flex flex-row flex-wrap gap-4 bg-green-300 p-4 rounded-lg">
+    <div className="flex flex-row flex-wrap gap-4 shadow-md bg-gray-100 p-4 rounded-lg">
       {/* Book Image */}
       <div className="flex-shrink-0">
         {volumeInfo.imageLinks?.thumbnail ? (

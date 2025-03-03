@@ -3,7 +3,7 @@
 import React from "react";
 import { Book } from "@/app/lib/types";
 import Image from "next/image";
-import BookLink from "../misc/booklink";
+import BookLink from "../ui/booklink";
 import SearchItemDetails from "./searchitemdetails";
 
 interface Props {

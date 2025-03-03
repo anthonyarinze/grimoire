@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import StackingBooksLoader from "../carousel/stackingbooksloader";
 import { TrendingUp } from "lucide-react";
-import BookLink from "../misc/booklink";
+import BookLink from "../ui/booklink";
 
 const categories = [
   "All",
