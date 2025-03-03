@@ -38,7 +38,8 @@ export const signInWithGoogle = createAsyncThunk(
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      return result.user;
+      const { uid, email, displayName, photoURL } = result.user;
+      return { uid, email, displayName, photoURL };
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         return rejectWithValue(error.message);
@@ -56,7 +57,8 @@ export const signInWithEmail = createAsyncThunk(
   ) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      return result.user;
+      const { uid, email: userEmail, displayName, photoURL } = result.user;
+      return { uid, email: userEmail, displayName, photoURL };
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         return rejectWithValue(error.message);
@@ -78,7 +80,8 @@ export const signUpWithEmail = createAsyncThunk(
         email,
         password
       );
-      return result.user;
+      const { uid, email: userEmail, displayName, photoURL } = result.user; // Extract only serializable fields
+      return { uid, email: userEmail, displayName, photoURL };
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         return rejectWithValue(error.message);

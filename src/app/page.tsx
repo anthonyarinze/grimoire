@@ -1,11 +1,20 @@
-import HomePage from "@/app/home/page";
-import Header from "@/app/components/headerandfooter/header";
-import SignIn from "./auth/signin/page";
+"use client";
+
+import { useAppSelector } from "@/app/lib/hooks";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <main>
-      <SignIn />
-    </main>
-  );
+  const { user } = useAppSelector((state) => state.auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    } else {
+      router.push("/auth/signin");
+    }
+  }, [user, router]);
+
+  return null; // This page only redirects
 }

@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 import { signInWithGoogle, signInWithEmail } from "@/app/lib/slices/authslice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -14,36 +14,37 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    if (user) {
+      router.push("/home"); // Redirect to home if authenticated
+    }
+  }, [user, router]);
+
   const handleGoogleSignIn = () => {
     dispatch(signInWithGoogle())
       .unwrap()
-      .then(() => router.push("/")); // Redirect after sign-in
+      .then(() => router.push("/home"));
   };
 
   const handleEmailSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(signInWithEmail({ email, password }))
       .unwrap()
-      .then(() => router.push("/"));
+      .then(() => router.push("/home"));
   };
-
-  if (user) {
-    router.push("/");
-    return null;
-  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="p-6 bg-white shadow-md rounded-md">
-        <h2 className="text-xl font-bold mb-4">Sign In</h2>
+        <h2 className="text-xl font-bold text-black mb-4">Sign In</h2>
 
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p className="text-red-500">{error.message}</p>}
 
         <form onSubmit={handleEmailSignIn} className="space-y-3">
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-2 border rounded-md"
+            className="w-full p-2 border text-black rounded-md"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -51,14 +52,16 @@ export default function SignIn() {
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-2 border rounded-md"
+            className="w-full p-2 border text-black rounded-md"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button
             type="submit"
-            className="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            className={`w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600 ${
+              loading && "opacity-50 cursor-not-allowed"
+            }`}
             disabled={loading}
           >
             {loading ? "Signing in..." : "Sign in"}
@@ -72,10 +75,13 @@ export default function SignIn() {
           Sign in with Google
         </button>
 
-        <span className="flex gap-1">
+        <span className="flex gap-1 text-black">
           <h3>Don&apos;t have an account? </h3>
-          <Link href="/signup">
-            <h3 className="hover:underline hover:text-blue-600"> Register</h3>
+          <Link
+            href="/auth/signup"
+            className="hover:underline hover:text-blue-600"
+          >
+            Register
           </Link>
         </span>
       </div>
