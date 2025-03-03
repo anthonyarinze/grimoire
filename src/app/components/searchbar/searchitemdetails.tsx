@@ -23,7 +23,7 @@ export default function SearchItemDetails({
       {/* Title */}
       <div>
         <h3
-          className="text-md font-semibold line-clamp-2 cursor-default"
+          className="text-md font-semibold line-clamp-2"
           title={title} // Native Tooltip
         >
           {title}

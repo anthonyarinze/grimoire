@@ -9,5 +9,5 @@ export const fetchBookDetails = async (bookId: string): Promise<Book[]> => {
     throw new Error("Failed to fetch book details. Please try again later.");
 
   const data = await response.json();
-  return data.items || [];
+  return data;
 };

@@ -31,6 +31,10 @@ export interface Book {
     imageLinks?: {
       smallThumbnail?: string;
       thumbnail?: string;
+      small?: string;
+      medium?: string;
+      large?: string;
+      extraLarge?: string;
     };
     language?: string;
     previewLink?: string;

@@ -82,7 +82,7 @@ export default function TrendingBooks() {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 px-4">
           {trendingBooks.map((book) => (
-            <BookLink key={book.id} bookId={book.id}>
+            <BookLink key={book.id} book={book}>
               <div className="flex flex-col items-center">
                 <Image
                   src={
