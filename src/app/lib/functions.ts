@@ -1,13 +1,21 @@
 import { Book } from "./types";
 
-export const fetchBookDetails = async (bookId: string): Promise<Book[]> => {
-  const response = await fetch(
-    `https://www.googleapis.com/books/v1/volumes/${bookId}`
-  );
+export const fetchBookDetails = async (
+  bookId: string
+): Promise<Book | null> => {
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/books/v1/volumes/${bookId}`
+    );
 
-  if (!response.ok)
-    throw new Error("Failed to fetch book details. Please try again later.");
+    if (!response.ok) {
+      console.error("Error fetching book details:", response.statusText);
+      return null;
+    }
 
-  const data = await response.json();
-  return data;
+    return await response.json();
+  } catch (error) {
+    console.error("Network error fetching book details:", error);
+    return null;
+  }
 };
