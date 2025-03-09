@@ -4,6 +4,7 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
+import Header from "./components/headerandfooter/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,10 @@ export default function RootLayout({
       >
         <StoreProvider>
           <QueryClientProvider client={queryClient}>
-            {children}
+            {/* The Header component is always rendered */}
+            <Header />
+            <main>{children}</main>{" "}
+            {/* Wrap children in a <main> tag for better structure */}
           </QueryClientProvider>
         </StoreProvider>
       </body>

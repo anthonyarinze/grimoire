@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import searchReducer from "./slices/searchSlice";
 import authReducer from "./slices/authslice";
+import userReducer from "./slices/userslice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: authReducer,
       search: searchReducer,
+      user: userReducer,
     },
   });
 };
