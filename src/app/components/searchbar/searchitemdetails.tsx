@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import mature from "../../../../public/mature.svg";
-import { BookOpen, Star } from "lucide-react";
+import { FaBookOpen, FaStar } from "react-icons/fa";
 
 interface Props {
   title: string;
@@ -39,13 +39,13 @@ export default function SearchItemDetails({
       <div className="flex items-center space-x-3 text-xs text-gray-500 mt-1">
         {rating !== undefined && (
           <div className="flex items-center space-x-1">
-            <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+            <FaStar className="h-4 w-4 text-yellow-500 fill-yellow-500" />
             <span>{rating.toFixed(1)}</span>
           </div>
         )}
         {pageCount && (
           <div className="flex items-center space-x-1">
-            <BookOpen className="h-4 w-4 text-gray-500" />
+            <FaBookOpen className="h-4 w-4 text-gray-500" />
             <span>{pageCount}</span>
           </div>
         )}

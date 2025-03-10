@@ -1,8 +1,8 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { Book } from "@/app/lib/types";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface Props {
   book: Book;
@@ -45,7 +45,7 @@ export default function BookHeader({ book }: Props) {
                 className="text-gray-600 hover:text-blue-700 transition"
                 title="Preview Book"
               >
-                <ExternalLink size={24} />
+                <FaExternalLinkAlt size={24} />
               </a>
             )}
           </span>

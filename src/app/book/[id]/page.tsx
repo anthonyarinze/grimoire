@@ -1,7 +1,9 @@
 "use client";
 
 import BookActions from "@/app/components/bookdetails/bookactions";
+import BookDesccription from "@/app/components/bookdetails/bookdescription";
 import BookHeader from "@/app/components/bookdetails/bookheader";
+import Spinner from "@/app/components/ui/spinner";
 import { fetchBookDetails } from "@/app/lib/functions";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -18,8 +20,7 @@ export default function BookDetails() {
     enabled: !!id, // Only fetch if id is truthy
   });
 
-  if (isLoading)
-    return <p className="text-gray-500">Loading book details...</p>;
+  if (isLoading) return <Spinner />;
   if (error) return <p className="text-red-500">Error loading book.</p>;
   if (!book) return <p className="text-red-500">No book found.</p>;
 
@@ -27,6 +28,7 @@ export default function BookDetails() {
     <main className="m-2 p-3 w-[95%] text-black flex flex-col">
       <BookHeader book={book} />
       <BookActions />
+      <BookDesccription />
     </main>
   );
 }

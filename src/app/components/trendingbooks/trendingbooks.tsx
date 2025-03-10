@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import StackingBooksLoader from "../carousel/stackingbooksloader";
-import { TrendingUp } from "lucide-react";
 import BookLink from "../ui/booklink";
+import { IoTrendingUp } from "react-icons/io5";
 
 const categories = [
   "All",
@@ -56,7 +56,7 @@ export default function TrendingBooks() {
     <section className="my-10 w-full">
       <span className="flex items-center text-black justify-center space-x-2 mb-4">
         <h2 className=" text-2xl  font-bold">See what&apos;s trending</h2>
-        <TrendingUp />
+        <IoTrendingUp />
       </span>
 
       {/* Category filter bar */}

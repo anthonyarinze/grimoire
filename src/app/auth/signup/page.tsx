@@ -66,7 +66,7 @@ export default function SignUp() {
           <h3>Already have an account? </h3>
           <Link
             href="/auth/signin"
-            className="hover:underline hover:text-blue-600"
+            className="hover:underline hover:text-ceruleanBlue"
           >
             Sign in
           </Link>

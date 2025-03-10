@@ -1,13 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { Menu, X, User, Book, LogOut, Loader } from "lucide-react";
 import SearchBar from "../searchbar/searchbar";
 import Link from "next/link";
 import { useLogout } from "@/app/hooks/uselogout";
+import ProtectedRoute from "../ui/protectedroute";
+import { useUser } from "@/app/hooks/useuser";
+import { IoClose, IoLibrary, IoMenu } from "react-icons/io5";
+import { FaUser } from "react-icons/fa";
+import { IoIosLogOut } from "react-icons/io";
+import { FiLoader } from "react-icons/fi";
+import { MdLogin } from "react-icons/md";
 
 export default function Header() {
   const { logout, isPending } = useLogout();
+  const { isAuthenticated } = useUser();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
@@ -19,7 +26,7 @@ export default function Header() {
       <header className="h-[4.5rem] px-4 flex items-center font-black justify-between bg-white shadow-lg sticky top-0 z-50">
         {/* Sidebar Toggle Button */}
         <button onClick={toggleSidebar} className="text-black">
-          <Menu size={28} />
+          <IoMenu size={28} />
         </button>
         <SearchBar />
       </header>
@@ -36,38 +43,49 @@ export default function Header() {
             <h1 className="text-2xl font-bold">Grimoire</h1>
           </Link>
           <button onClick={closeSidebar}>
-            <X size={24} />
+            <IoClose size={24} />
           </button>
         </div>
 
         {/* Sidebar Links */}
-        <nav className="p-4 space-y-4">
-          <Link
-            href="/account"
-            className="flex items-center text-black gap-2 hover:text-gray-700"
-          >
-            <User size={20} /> Account
-          </Link>
-          <Link
-            href="/library"
-            className="flex items-center text-black gap-2 hover:text-gray-700"
-          >
-            <Book size={20} /> Library
-          </Link>
-          <button
-            className="flex items-center text-black gap-2 hover:text-red-600"
-            onClick={logout}
-            disabled={isPending}
-          >
-            {isPending ? (
-              <Loader size={20} className="animate-spin" />
+        <ProtectedRoute>
+          <nav className="p-4 space-y-4">
+            <Link
+              href="/account"
+              className="flex items-center text-black gap-2 hover:text-gray-700"
+            >
+              <FaUser size={20} /> Account
+            </Link>
+            <Link
+              href="/library"
+              className="flex items-center text-black gap-2 hover:text-gray-700"
+            >
+              <IoLibrary size={20} /> Library
+            </Link>
+            {isAuthenticated ? (
+              <button
+                className="flex items-center text-black gap-2 hover:text-red-600"
+                onClick={logout}
+                disabled={isPending}
+              >
+                {isPending ? (
+                  <FiLoader size={20} className="animate-spin">
+                    Signing out...
+                  </FiLoader>
+                ) : (
+                  <>
+                    <IoIosLogOut size={20} /> Sign Out
+                  </>
+                )}
+              </button>
             ) : (
-              <>
-                <LogOut size={20} /> Sign Out
-              </>
+              <button className="flex items-center text-black gap-2 hover:text-green-600">
+                <MdLogin size={20} />
+                <Link href="/auth/signin">Login</Link>
+              </button>
             )}
-          </button>
-        </nav>
+          </nav>
+        </ProtectedRoute>
       </div>
 
       {/* Dark Overlay */}

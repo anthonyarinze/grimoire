@@ -3,7 +3,7 @@ import { getCurrentUser } from "../lib/auth/getcurrentuser";
 
 export function useUser() {
   const { isLoading, data: user } = useQuery({
-    queryKey: "user",
+    queryKey: ["user"],
     queryFn: () => getCurrentUser(),
   });
 

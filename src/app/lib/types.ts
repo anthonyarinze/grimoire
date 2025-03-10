@@ -42,3 +42,10 @@ export interface Book {
     canonicalVolumeLink?: string;
   };
 }
+
+export interface UserState {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoUrl: string | null;
+}

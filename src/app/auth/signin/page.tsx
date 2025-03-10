@@ -79,7 +79,7 @@ export default function SignIn() {
           <h3>Don&apos;t have an account? </h3>
           <Link
             href="/auth/signup"
-            className="hover:underline hover:text-blue-600"
+            className="hover:underline hover:text-ceruleanBlue"
           >
             Register
           </Link>

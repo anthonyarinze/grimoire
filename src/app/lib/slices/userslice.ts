@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface UserState {
-  uid: string;
-  email: string | null;
-  displayName: string | null;
-  photoURL: string | null;
-}
+import { UserState } from "../types";
 
 // returns either userstaet or null if no ones logged in yet
 const initialState: UserState | null = null;

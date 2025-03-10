@@ -1,8 +1,8 @@
-"use client";
-
 import { auth } from "@/app/lib/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { Button } from "../ui/button";
+import Button from "../ui/button";
+import google from "../../../../public/google.svg";
+import Image from "next/image";
 
 export default function GoogleSignIn() {
   const handleSignIn = async () => {
@@ -14,5 +14,10 @@ export default function GoogleSignIn() {
     }
   };
 
-  return <Button onClick={handleSignIn}>Sign in with Google</Button>;
+  return (
+    <Button onClick={handleSignIn} variant="google" size="medium">
+      <Image src={google} alt="Google Logo" />
+      Sign In With Goodle
+    </Button>
+  );
 }

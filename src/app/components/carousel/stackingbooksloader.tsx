@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Book } from "lucide-react";
 import React from "react";
+import { FaBook } from "react-icons/fa";
 
 const bookVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -39,7 +39,7 @@ export default function StackingBooksLoader() {
             animate="visible"
             variants={bookVariants}
           >
-            <Book className="h-8 w-8" />
+            <FaBook className="h-8 w-8" />
           </motion.div>
         ))}
       </div>

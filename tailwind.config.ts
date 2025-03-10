@@ -11,6 +11,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        ceruleanBlue: "#2a52be",
       },
     },
   },
