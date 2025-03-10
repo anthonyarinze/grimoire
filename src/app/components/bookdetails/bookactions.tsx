@@ -14,7 +14,7 @@ export default function BookActions() {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-wrap gap-3 mt-6">
+    <div className="flex flex-wrap gap-3">
       {statuses.map(({ label, icon }) => (
         <button
           key={label}

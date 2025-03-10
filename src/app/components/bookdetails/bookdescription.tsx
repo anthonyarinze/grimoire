@@ -1,5 +1,30 @@
-import React from "react";
+"use client";
 
-export default function BookDesccription() {
-  return <section>Book Description</section>;
+import React, { useState } from "react";
+
+interface BookDescriptionProps {
+  description: string;
+}
+
+export default function BookDescription({ description }: BookDescriptionProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <section className="relative text-lg text-gray-800">
+      <div
+        className={`transition-all duration-500 ${
+          isExpanded ? "line-clamp-none" : "line-clamp-4"
+        }`}
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
+
+      {/* Read More / Show Less Button */}
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="mt-2 text-ceruleanBlue font-semibold hover:underline"
+      >
+        {isExpanded ? "Read Less" : "Read More"}
+      </button>
+    </section>
+  );
 }

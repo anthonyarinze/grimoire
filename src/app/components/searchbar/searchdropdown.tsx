@@ -1,31 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SearchItem from "./searchitem";
-import { Book } from "../../lib/types";
-import { useDebouncedCallback } from "use-debounce";
 import ProgressBar from "./progressbar";
-
-const fetchBooks = async (query: string): Promise<{ items: Book[] }> => {
-  const response = await fetch(
-    `/api/search?query=${encodeURIComponent(query)}`
-  );
-  if (!response.ok) {
-    throw new Error("Failed to fetch search results.");
-  }
-  const data = await response.json();
-  if (data.error) {
-    throw new Error(data.error);
-  }
-  return data;
-};
+import { fetchBooks } from "@/app/lib/api";
 
 export default function SearchDropdown({ query }: { query: string }) {
   const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const debouncedFetchBooks = useDebouncedCallback((query: string) => {
-    return fetchBooks(query);
-  }, 400);
 
   const {
     data,
@@ -33,7 +14,7 @@ export default function SearchDropdown({ query }: { query: string }) {
     error: fetchError,
   } = useQuery({
     queryKey: ["books", query],
-    queryFn: () => debouncedFetchBooks(query).then((result) => result),
+    queryFn: () => fetchBooks(query), // ✅ Use fetchBooks directly
     enabled: !!query,
   });
 
@@ -54,6 +35,8 @@ export default function SearchDropdown({ query }: { query: string }) {
   }, [dropdownRef]);
 
   if (fetchError) return <p>Error: {fetchError.message}</p>;
+
+  console.log(data);
 
   return (
     isOpen && (

@@ -22,7 +22,7 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search..."
-          className="bg-gray-200 w-[14.5rem] border-gray-300 border p-2 rounded-md text-md"
+          className="bg-gray-200 w-[14.5rem] text-black border-gray-300 border p-2 rounded-md text-md"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

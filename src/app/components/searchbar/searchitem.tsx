@@ -6,13 +6,9 @@ import Image from "next/image";
 import BookLink from "../ui/booklink";
 import SearchItemDetails from "./searchitemdetails";
 
-interface Props {
-  results: Book[];
-}
-
-export default function SearchItem({ results }: Props) {
+export default function SearchItem({ results }: Book) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col text-black gap-2">
       <ul className="list-none p-0 m-0">
         {results?.map((book) => (
           <BookLink key={book.id} book={book}>
