@@ -85,9 +85,7 @@ export default function TrendingBooks() {
             <BookLink key={book.id} book={book}>
               <div className="flex flex-col items-center">
                 <Image
-                  src={
-                    book.volumeInfo.imageLinks?.thumbnail || "/placeholder.png"
-                  }
+                  src={book.volumeInfo.imageLinks?.thumbnail || null}
                   alt={book.volumeInfo.title}
                   width={120}
                   height={160}

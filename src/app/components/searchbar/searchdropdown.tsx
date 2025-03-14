@@ -36,8 +36,6 @@ export default function SearchDropdown({ query }: { query: string }) {
 
   if (fetchError) return <p>Error: {fetchError.message}</p>;
 
-  console.log(data);
-
   return (
     isOpen && (
       <div ref={dropdownRef} className="relative z-50">
