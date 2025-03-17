@@ -2,12 +2,24 @@
 
 import { useAuth } from "@/app/hooks/useAuth";
 import { useAppSelector } from "@/app/lib/hooks";
-import { useState } from "react";
 import { FcReading } from "react-icons/fc";
 import { IoCheckmarkDone, IoLibrary } from "react-icons/io5";
-import { getDoc, setDoc, doc, serverTimestamp } from "firebase/firestore";
+import {
+  getDoc,
+  setDoc,
+  doc,
+  serverTimestamp,
+  deleteField,
+} from "firebase/firestore";
 import { db } from "@/app/lib/firebase";
 import { FaSpinner } from "react-icons/fa";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { queryClient } from "@/app/lib/queryClient";
+import {
+  errorNotifier,
+  infoNotifier,
+  successNotifier,
+} from "@/app/lib/notifications";
 
 const statuses = [
   { label: "Want to Read", icon: <IoLibrary size={20} /> },
@@ -17,70 +29,86 @@ const statuses = [
 
 export default function BookActions() {
   const selectedBook = useAppSelector((state) => state.search.selectedBook);
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); // Add a loading state
   const user = useAuth();
 
-  const handleStatusChange = async (status: string) => {
-    if (!user?.uid) {
-      alert("Please login to manage your library.");
-      return;
-    }
+  // Fetch book status from firestore using react query
+  const { data: bookStatus, isLoading } = useQuery({
+    queryKey: ["bookStatus", user?.uid, selectedBook?.id],
+    queryFn: async () => {
+      if (!user?.uid || !selectedBook?.id) return null;
+      const userLibraryRef = doc(db, "libraries", user.uid);
+      const userLibrarySnap = await getDoc(userLibraryRef);
+      return userLibrarySnap.exists()
+        ? userLibrarySnap.data()[selectedBook.id]?.status || null
+        : null;
+    },
+    enabled: !!user?.uid && !!selectedBook?.id, // Only fetch if user and book id are truthy
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
-    setLoading(true);
-    // ✅ Add a loading state to prevent multiple clicks
-    setSelectedStatus(status);
-    // ✅ Update the user's book status in the database
+  // mutation to update firestore
+  const { mutate: updateBookStatus, isPending } = useMutation({
+    mutationFn: async (status: string) => {
+      if (!user?.uid || !selectedBook?.id) {
+        infoNotifier("Please login to update your library.");
+        return;
+      }
 
-    try {
       const userLibraryRef = doc(db, "libraries", user.uid);
       const userLibrarySnap = await getDoc(userLibraryRef);
 
-      // Check if the book already exists in Firestore
+      // Check if book already exists
       const existingBook = userLibrarySnap.exists()
         ? userLibrarySnap.data()[selectedBook.id]
         : null;
 
-      const bookData = {
-        id: selectedBook?.id,
-        title: selectedBook?.volumeInfo.title,
-        authors: selectedBook?.volumeInfo.authors,
-        cover: selectedBook?.volumeInfo.imageLinks?.thumbnail,
-        status: status,
-        addedAt: existingBook?.addedAt || serverTimestamp(),
-        lastModified: serverTimestamp(),
-      };
-
-      if (userLibrarySnap.exists()) {
-        // Update book status in firestore
+      if (existingBook?.status === status) {
+        // ✅ Remove book from library if clicked twice
         await setDoc(
           userLibraryRef,
-          { [selectedBook?.id]: bookData },
+          { [selectedBook.id]: deleteField() }, // Remove the book entry
           { merge: true }
         );
-        alert("Book status updated successfully!");
+        successNotifier("Book removed from your library!");
       } else {
-        // Create a library if it doesn't exist
-        await setDoc(userLibraryRef, { [selectedBook?.id]: bookData });
-        alert("Book added to your library!");
+        // ✅ Update book status in Firestore
+        const bookData = {
+          id: selectedBook.id,
+          title: selectedBook.volumeInfo.title,
+          authors: selectedBook.volumeInfo.authors,
+          cover: selectedBook.volumeInfo.imageLinks?.thumbnail,
+          status,
+          addedAt: existingBook?.addedAt || serverTimestamp(),
+          lastModified: serverTimestamp(),
+        };
+
+        await setDoc(
+          userLibraryRef,
+          { [selectedBook.id]: bookData },
+          { merge: true }
+        );
+        successNotifier("Book status updated successfully!");
       }
-    } catch (error) {
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["bookStatus", user?.uid, selectedBook?.id],
+      });
+    },
+    onError: (error) => {
       console.error("Error updating book status:", error);
-      alert("Failed to update book status. Please try again.");
-    } finally {
-      setLoading(false);
-      // ✅ Reset the loading state after the operation
-    }
-  };
+      errorNotifier("Failed to update book status. Please try again.");
+    },
+  });
 
   return (
     <>
       {/* {Full screen loading overlay} */}
-      {loading && (
+      {isPending && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="flex flex-col items-center">
             <FaSpinner className="text-white text-4xl animate-spin" />
-            <p className="text-white mt-2">Updating library...</p>
+            <p className="text-white mt-2 z-50">Updating library...</p>
           </div>
         </div>
       )}
@@ -88,9 +116,10 @@ export default function BookActions() {
         {statuses.map(({ label, icon }) => (
           <button
             key={label}
-            onClick={() => handleStatusChange(label)}
+            disabled={isLoading || isPending}
+            onClick={() => updateBookStatus(label)}
             className={`px-4 py-2 flex items-center gap-2 rounded-md font-semibold transition ${
-              selectedStatus === label
+              bookStatus === label
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white"
             }`}

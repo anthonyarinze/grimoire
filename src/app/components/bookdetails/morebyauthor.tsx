@@ -2,10 +2,9 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import { fetchBooksByAuthor } from "@/app/lib/api";
 import { Book } from "@/app/lib/types";
-import BookLink from "../ui/booklink";
+import MoreBooksCard from "./morebookscard";
 
 interface MoreByAuthorProps {
   author: string | string[];
@@ -37,20 +36,7 @@ export default function MoreByAuthor({ author }: MoreByAuthorProps) {
         <div className="flex gap-4 whitespace-nowrap">
           {data?.items.length > 0 ? (
             data.items.map((book: Book) => (
-              <BookLink key={book.id} book={book}>
-                <div className="text-wrap items-start flex flex-col w-[180px] text-center shrink-0">
-                  <Image
-                    src={book.volumeInfo.imageLinks?.thumbnail || null}
-                    alt={book.volumeInfo.title}
-                    className="w-full object-cover rounded-md shadow-md"
-                    width={160}
-                    height={240}
-                  />
-                  <p className="mt-2 text-sm font-medium">
-                    {book.volumeInfo.title}
-                  </p>
-                </div>
-              </BookLink>
+              <MoreBooksCard key={book.id} book={book} />
             ))
           ) : (
             <p className="text-gray-500">

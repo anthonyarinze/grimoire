@@ -10,8 +10,8 @@ export default function SearchItem({ results }: Book) {
   return (
     <div className="flex flex-col text-black gap-2">
       <ul className="list-none p-0 m-0">
-        {results?.map((book) => (
-          <BookLink key={book.id} book={book}>
+        {results?.map((book: Book) => (
+          <BookLink key={book.id} bookId={book.id}>
             <li className="flex items-start gap-2 p-2 content-start overflow-hidden hover:bg-gray-200 cursor-pointer">
               <Image
                 src={book.volumeInfo.imageLinks?.smallThumbnail || null}
