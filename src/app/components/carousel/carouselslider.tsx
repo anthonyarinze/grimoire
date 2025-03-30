@@ -99,10 +99,7 @@ export default function PopularBooksCarousel() {
               {books.map((book) => (
                 <div key={book.id} className="flex flex-col items-center w-28">
                   <Image
-                    src={
-                      book.volumeInfo.imageLinks?.thumbnail ||
-                      "/placeholder.png"
-                    }
+                    src={book.volumeInfo.imageLinks?.thumbnail || null}
                     alt={book.volumeInfo.title}
                     width={100}
                     height={130}

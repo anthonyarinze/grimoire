@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import mature from "../../../../public/mature.svg";
 import { FaBookOpen, FaStar } from "react-icons/fa";
+import ToolTip from "@/app/components/ui/tooltip";
 
 interface Props {
   title: string;
@@ -59,9 +60,7 @@ export default function SearchItemDetails({
               className="cursor-pointer"
             />
             {/* Tooltip */}
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden w-max max-w-xs bg-gray-800 text-white text-xs px-2 py-1 rounded-md shadow-md group-hover:block z-50">
-              Mature Content
-            </div>
+            <ToolTip text="Mature Content" />
           </div>
         )}
       </div>

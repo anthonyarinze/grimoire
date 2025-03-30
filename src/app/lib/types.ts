@@ -1,3 +1,5 @@
+// TypeScript interfaces for the Google Books API response and user state
+// and for the library books in Firestore
 export interface Book {
   etag: string;
   id: string;
@@ -48,4 +50,14 @@ export interface UserState {
   email: string | null;
   displayName: string | null;
   photoUrl: string | null;
+}
+
+export interface LibraryBooks {
+  addedAt: string;
+  authors: string[];
+  cover: string;
+  id: string;
+  lastModified: string;
+  status: string;
+  title: string;
 }

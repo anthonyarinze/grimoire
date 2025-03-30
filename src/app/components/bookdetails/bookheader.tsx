@@ -17,7 +17,7 @@ export default function BookHeader({ book }: Props) {
       <div className="flex-shrink-0">
         {volumeInfo.imageLinks?.thumbnail ? (
           <Image
-            src={volumeInfo.imageLinks.thumbnail}
+            src={volumeInfo.imageLinks.thumbnail || null}
             height={300}
             width={200}
             alt={volumeInfo.title}

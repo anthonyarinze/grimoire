@@ -5,6 +5,7 @@ import Image from "next/image";
 import StackingBooksLoader from "../carousel/stackingbooksloader";
 import BookLink from "../ui/booklink";
 import { IoTrendingUp } from "react-icons/io5";
+import placeholder from "../../../../public/placeholder.png";
 
 const categories = [
   "All",
@@ -82,10 +83,10 @@ export default function TrendingBooks() {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 px-4">
           {trendingBooks.map((book) => (
-            <BookLink key={book.id} book={book}>
+            <BookLink key={book.id} bookId={book.id}>
               <div className="flex flex-col items-center">
                 <Image
-                  src={book.volumeInfo.imageLinks?.thumbnail || null}
+                  src={book.volumeInfo.imageLinks?.thumbnail || placeholder}
                   alt={book.volumeInfo.title}
                   width={120}
                   height={160}
