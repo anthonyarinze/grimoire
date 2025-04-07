@@ -10,13 +10,15 @@ import LibraryCard from "@/app/components/library/librarycard";
 import { useUser } from "@/app/hooks/useUser";
 import { LibraryBooks } from "@/app/lib/types";
 import { queryClient } from "@/app/lib/queryClient";
+import Spinner from "../components/ui/spinner";
 
 const filters = ["All", "Want to Read", "Reading", "Finished"];
 
 export default function LibraryPage() {
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, isLoading: isUserLoading } = useUser();
   const user = useAuth();
   const [selectedFilter, setSelectedFilter] = useState("All");
+  const [removingBookId, setRemovingBookId] = useState<string | null>(null);
 
   // Fetch user's library
   const { data: library = [], isLoading } = useQuery({
@@ -38,9 +40,10 @@ export default function LibraryPage() {
   });
 
   // Mutation to remove a book from the library
-  const { mutate: removeBook, isPending } = useMutation({
+  const { mutate: removeBook } = useMutation({
     mutationFn: async (bookId: string) => {
       if (!user?.uid) return;
+      setRemovingBookId(bookId); // Set the book ID being removed
       const userLibraryRef = doc(db, "libraries", user.uid);
       await updateDoc(userLibraryRef, { [bookId]: null }); // Removes the book entry
     },
@@ -51,6 +54,9 @@ export default function LibraryPage() {
     onError: () => {
       errorNotifier("Failed to remove book. Try again.");
     },
+    onSettled: () => {
+      setRemovingBookId(null); // Reset the removing book ID when done
+    },
   });
 
   // Filter books based on the selected status
@@ -60,6 +66,10 @@ export default function LibraryPage() {
       : library?.filter(
           (book: LibraryBooks) => book?.status === selectedFilter
         );
+
+  if (isUserLoading || isLoading) {
+    return <Spinner />;
+  }
 
   if (!isAuthenticated) {
     return (
@@ -73,15 +83,15 @@ export default function LibraryPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">📚 My Library</h1>
+      <h1 className="text-3xl font-bold text-black mb-4">📚 My Library</h1>
 
       {/* Filter Buttons */}
-      <div className="flex space-x-3 mb-6">
+      <div className="flex space-x-3 md:text-base text-sm overflow-scroll scrollbar-hide mb-6">
         {filters.map((filter) => (
           <button
             key={filter}
             onClick={() => setSelectedFilter(filter)}
-            className={`px-4 py-2 rounded-md font-semibold transition ${
+            className={`md:px-4 md:py-2 p-[0.7rem] rounded-md  font-semibold transition ${
               selectedFilter === filter
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white"
@@ -93,9 +103,7 @@ export default function LibraryPage() {
       </div>
 
       {/* Book Grid */}
-      {isLoading ? (
-        <p>Loading your library...</p>
-      ) : filteredBooks?.length > 0 ? (
+      {filteredBooks?.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {filteredBooks.map(
             (book: LibraryBooks) =>
@@ -104,13 +112,13 @@ export default function LibraryPage() {
                   key={book.id}
                   book={book}
                   onRemove={removeBook}
-                  isPending={isPending}
+                  isPending={removingBookId === book.id}
                 />
               )
           )}
         </div>
       ) : (
-        <p className="text-gray-500">No books found in this category.</p>
+        <p className="text-black">No books found in this category.</p>
       )}
     </div>
   );

@@ -6,5 +6,5 @@ export default function ProtectedRoute({ children }) {
   const { isLoading } = useUser();
 
   if (isLoading) return <Spinner />;
-  return <div className="flex h-screen text-lg">{children}</div>;
+  return <main className="flex h-screen text-lg">{children}</main>;
 }

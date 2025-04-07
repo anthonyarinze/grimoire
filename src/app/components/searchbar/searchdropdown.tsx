@@ -4,7 +4,13 @@ import SearchItem from "./searchitem";
 import ProgressBar from "./progressbar";
 import { fetchBooks } from "@/app/lib/api";
 
-export default function SearchDropdown({ query }: { query: string }) {
+export default function SearchDropdown({
+  query,
+  onSelectResult,
+}: {
+  query: string;
+  onSelectResult: () => void;
+}) {
   const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -14,7 +20,7 @@ export default function SearchDropdown({ query }: { query: string }) {
     error: fetchError,
   } = useQuery({
     queryKey: ["books", query],
-    queryFn: () => fetchBooks(query), // ✅ Use fetchBooks directly
+    queryFn: () => fetchBooks(query),
     enabled: !!query,
   });
 
@@ -47,7 +53,10 @@ export default function SearchDropdown({ query }: { query: string }) {
               {/* Top gradient for scroll cue */}
               <div className="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-gray-100 to-transparent z-10 pointer-events-none"></div>
               {/* Content */}
-              <SearchItem results={data?.items || []} />
+              <SearchItem
+                results={data?.items || []}
+                onSelect={onSelectResult}
+              />
               {/* Bottom gradient for scroll cue */}
               <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-100 to-transparent z-10 pointer-events-none"></div>
             </>

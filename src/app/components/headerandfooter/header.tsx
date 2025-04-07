@@ -52,13 +52,13 @@ export default function Header() {
           <nav className="p-4 space-y-4">
             <Link
               href="/account"
-              className="flex items-center text-black gap-2 hover:text-gray-700"
+              className="flex items-center text-black gap-2 hover:text-ceruleanBlue"
             >
               <FaUser size={20} /> Account
             </Link>
             <Link
               href="/library"
-              className="flex items-center text-black gap-2 hover:text-gray-700"
+              className="flex items-center text-black gap-2 hover:text-ceruleanBlue"
             >
               <IoLibrary size={20} /> Library
             </Link>

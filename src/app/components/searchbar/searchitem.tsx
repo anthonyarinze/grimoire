@@ -5,16 +5,22 @@ import { Book } from "@/app/lib/types";
 import Image from "next/image";
 import BookLink from "../ui/booklink";
 import SearchItemDetails from "./searchitemdetails";
+import placeholder from "../../../../public/placeholder.png";
 
-export default function SearchItem({ results }: Book) {
+interface SearchItemProps {
+  results: Book[];
+  onSelect: () => void;
+}
+
+export default function SearchItem({ results, onSelect }: SearchItemProps) {
   return (
     <div className="flex flex-col text-black gap-2">
       <ul className="list-none p-0 m-0">
         {results?.map((book: Book) => (
-          <BookLink key={book.id} bookId={book.id}>
+          <BookLink key={book.id} bookId={book.id} onClick={onSelect}>
             <li className="flex items-start gap-2 p-2 content-start overflow-hidden hover:bg-gray-200 cursor-pointer">
               <Image
-                src={book.volumeInfo.imageLinks?.smallThumbnail || null}
+                src={book.volumeInfo.imageLinks?.smallThumbnail || placeholder}
                 alt={book.volumeInfo.title}
                 width={60}
                 height={70}
