@@ -37,3 +37,17 @@ export async function fetchBooks(query: string): Promise<{ items: Book[] }> {
   }
   return data;
 }
+
+export async function fetchBookById(id: string): Promise<Book> {
+  const response = await fetch(
+    `https://www.googleapis.com/books/v1/volumes/${id}`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch book details.");
+  }
+  const data = await response.json();
+  if (data.error) {
+    throw new Error(data.error);
+  }
+  return data;
+}
