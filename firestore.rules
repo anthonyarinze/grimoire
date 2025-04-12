@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Rule for libraries collection
+    match /libraries/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // If you store anything else (like public books list, recommendations, etc.), you can loosen those as needed
+    match /publicContent/{docId} {
+      allow read;
+    }
+  }
+}

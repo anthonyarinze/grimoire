@@ -8,7 +8,6 @@ import ConfirmDialog from "@/app/components/ui/confirmdialog";
 export default function AccountSettings() {
   const { logout, isPending: isLoggingOut } = useLogout();
   const { deleteAccount, isPending: isDeleting } = useDeleteAccount();
-
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 

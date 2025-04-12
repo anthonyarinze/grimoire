@@ -1,17 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useUser } from "../hooks/useuser";
 import { UserState } from "@/app/lib/types";
 import UserWelcome from "./accountcomponents/userwelcome";
 import StatCard from "./accountcomponents/statcard";
 import { useLibrary } from "../hooks/useLibrary";
 import AccountSettings from "./accountcomponents/accountsettings";
+import EditProfileModal from "./accountcomponents/editprofilemodal";
 
 export default function Account() {
   const { isAuthenticated, user } = useUser();
   const currentUser = user as UserState;
   const { library } = useLibrary();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!isAuthenticated || !currentUser) {
     return (
@@ -43,6 +45,21 @@ export default function Account() {
           value={library.filter((book) => book.status === "Finished").length}
         />
       </section>
+
+      {/* Edit profile */}
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="ml-auto bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+      >
+        Edit Profile
+      </button>
+      <EditProfileModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialDisplayName={currentUser.displayName ?? ""}
+        initialPhotoUrl={currentUser.photoUrl}
+        userId={currentUser.uid}
+      />
 
       {/* Account settings */}
       <AccountSettings />
