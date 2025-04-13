@@ -7,7 +7,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { errorNotifier, successNotifier } from "@/app/lib/notifications";
 import LibraryCard from "@/app/components/library/librarycard";
-import { useUser } from "@/app/hooks/useUser";
+import { useUser } from "@/app/hooks/useuser";
 import { LibraryBooks } from "@/app/lib/types";
 import { queryClient } from "@/app/lib/queryClient";
 import Spinner from "../components/ui/spinner";
