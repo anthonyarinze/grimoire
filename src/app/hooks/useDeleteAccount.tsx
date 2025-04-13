@@ -1,4 +1,3 @@
-// hooks/usedeleteaccount.ts
 import { useMutation } from "@tanstack/react-query";
 import { deleteUser } from "firebase/auth";
 import { doc, deleteDoc } from "firebase/firestore";
