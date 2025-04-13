@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useUpdateProfile } from "@/app/hooks/useupdateprofile";
-import { uploadProfileImage } from "@/app/hooks/useuploadprofileimage";
 import Image from "next/image";
 
 interface Props {
@@ -16,34 +15,27 @@ export default function EditProfileModal({
   onClose,
   initialDisplayName,
   initialPhotoUrl,
-  userId,
 }: Props) {
   const [displayName, setDisplayName] = useState(initialDisplayName);
   const [photoUrl, setPhotoUrl] = useState(initialPhotoUrl ?? "");
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(photoUrl);
-  const [isUploading, setUploading] = useState(false);
+  const [previewError, setPreviewError] = useState(false);
   const { update, isPending } = useUpdateProfile();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      setPreview(URL.createObjectURL(file));
-    }
+  // Acceptable extensions
+  const isValidImageUrl = (url: string) => {
+    return /\.(jpg|jpeg|png|gif|webp)$/.test(url);
   };
+
+  const isImageValid = photoUrl === "" || isValidImageUrl(photoUrl);
+
+  const isDisplayNameValid = displayName.trim().length > 0;
+  const isFormValid = isDisplayNameValid && isImageValid;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let finalPhotoUrl = photoUrl;
+    if (!isFormValid) return; // Prevent submission if form is invalid
 
-    if (imageFile) {
-      setUploading(true);
-      finalPhotoUrl = await uploadProfileImage(imageFile, userId);
-      setUploading(false);
-    }
-
-    await update({ displayName, photoUrl: finalPhotoUrl });
+    await update({ displayName, photoUrl });
     onClose();
   };
 
@@ -63,22 +55,58 @@ export default function EditProfileModal({
               onChange={(e) => setDisplayName(e.target.value)}
               className="w-full p-2 border rounded mt-1"
             />
+            {!isDisplayNameValid && (
+              <p className="text-xs text-red-500 mt-1">
+                Display name is required.
+              </p>
+            )}
           </div>
 
           {/* Upload + Preview */}
           <div>
             <label className="block text-sm font-medium">Profile Image</label>
-            {preview && (
+            {photoUrl && isValidImageUrl(photoUrl) && (
               <Image
-                src={preview}
+                src={previewError ? "/default-avatar.png" : photoUrl}
                 height={96}
                 width={96}
                 alt="Profile preview"
                 className="rounded-full object-cover mt-2 mb-2"
+                onError={() => setPreviewError(true)}
+                onLoad={() => setPreviewError(false)}
               />
             )}
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+
+            <input
+              type="text"
+              name="photoUrl"
+              placeholder="Image URL"
+              value={photoUrl}
+              onChange={(e) => {
+                setPhotoUrl(e.target.value);
+                setPreviewError(false); // Reset preview error if user types again
+              }}
+              className="border p-2 rounded w-full"
+            />
+
+            <p className="text-xs text-gray-500 mt-1">
+              I only support image links that point directly to a photo hosted
+              online for now. Valid formats: .jpg, .jpeg, .png, .gif, .webp
+            </p>
+
+            {!isValidImageUrl(photoUrl) && photoUrl && (
+              <p className="text-xs text-red-500 mt-1">
+                That doesn’t look like a valid image URL.
+              </p>
+            )}
           </div>
+          {photoUrl && !isImageValid && (
+            <p className="text-red-500 text-sm mt-1">
+              I only support image links that point directly to a photo hosted
+              online (e.g., ending in .jpg, .png, etc). I hope to incorporate
+              image upload in the future.
+            </p>
+          )}
 
           {/* Actions */}
           <div className="flex justify-end gap-3 mt-6">
@@ -91,10 +119,14 @@ export default function EditProfileModal({
             </button>
             <button
               type="submit"
-              disabled={isPending || isUploading}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              disabled={isPending || !isFormValid}
+              className={`px-4 py-2 rounded transition text-white ${
+                isPending || !isFormValid
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
             >
-              {isPending || isUploading ? "Saving..." : "Save"}
+              {isPending ? "Updating..." : "Save Changes"}
             </button>
           </div>
         </form>
