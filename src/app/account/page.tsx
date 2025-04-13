@@ -27,7 +27,25 @@ export default function Account() {
 
   return (
     <main className="p-6">
+      {/* User welcome */}
       <UserWelcome user={currentUser} />
+
+      {/* Edit profile */}
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="ml-4 mt-4 bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+      >
+        Edit Profile
+      </button>
+      <EditProfileModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialDisplayName={currentUser.displayName ?? ""}
+        initialPhotoUrl={currentUser.photoUrl}
+        userId={currentUser.uid}
+      />
+
+      {/* Reading stats */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
         <StatCard label="Total" value={library.length} />
         <StatCard
@@ -45,21 +63,6 @@ export default function Account() {
           value={library.filter((book) => book.status === "Finished").length}
         />
       </section>
-
-      {/* Edit profile */}
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="ml-auto bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-      >
-        Edit Profile
-      </button>
-      <EditProfileModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        initialDisplayName={currentUser.displayName ?? ""}
-        initialPhotoUrl={currentUser.photoUrl}
-        userId={currentUser.uid}
-      />
 
       {/* Account settings */}
       <AccountSettings />

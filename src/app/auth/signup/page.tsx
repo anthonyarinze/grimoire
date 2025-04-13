@@ -5,6 +5,7 @@ import { signUpWithEmail } from "@/app/lib/slices/authslice";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { errorNotifier, successNotifier } from "@/app/lib/notifications";
 
 export default function SignUp() {
   const dispatch = useAppDispatch();
@@ -22,9 +23,15 @@ export default function SignUp() {
 
   const handleEmailSignUp = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(signUpWithEmail({ email, password }))
-      .unwrap()
-      .then(() => router.push("/home"));
+    try {
+      dispatch(signUpWithEmail({ email, password }))
+        .unwrap()
+        .then(() => router.push("/home"));
+      successNotifier("Sign up successful! Redirecting to home...");
+    } catch (error) {
+      errorNotifier("Error signing up. Please try again.");
+      console.error("Error signing up:", error);
+    }
   };
 
   return (

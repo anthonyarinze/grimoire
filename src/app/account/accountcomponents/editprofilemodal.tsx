@@ -31,12 +31,19 @@ export default function EditProfileModal({
   const isDisplayNameValid = displayName.trim().length > 0;
   const isFormValid = isDisplayNameValid && isImageValid;
 
+  const resetForm = () => {
+    setDisplayName(initialDisplayName);
+    setPhotoUrl(initialPhotoUrl ?? "");
+    setPreviewError(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isFormValid) return; // Prevent submission if form is invalid
 
     await update({ displayName, photoUrl });
     onClose();
+    resetForm(); // Reset form after submission
   };
 
   if (!isOpen) return null;
