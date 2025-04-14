@@ -23,7 +23,6 @@ export interface Book {
     printType?: string; // Optional
     categories?: string[]; // Optional
     maturityRating?: string; // Optional
-    pageCount?: number; // Optional
     allowAnonLogging?: boolean;
     contentVersion?: string;
     panelizationSummary?: {

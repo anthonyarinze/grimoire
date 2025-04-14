@@ -1,3 +1,4 @@
+import { Config } from "tailwindcss";
 export default {
   darkMode: "class", // Add this line
   content: [
