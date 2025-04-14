@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "@/app/lib/firebase";
-import { Button } from "@/components/ui/button";
+import Button from "../ui/button";
 
 export default function EmailSignIn() {
   const [email, setEmail] = useState("");

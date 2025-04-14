@@ -1,20 +1,20 @@
 import { getTimeOfDay } from "@/app/lib/functions";
-import { UserState } from "@/app/lib/types";
+import { User } from "firebase/auth";
 import Image from "next/image";
 import React from "react";
 import { FaRegUser } from "react-icons/fa";
 
 interface UserWelcomeProps {
-  user: UserState;
+  user: User;
 }
 
 export default function UserWelcome({ user }: UserWelcomeProps) {
   const timeOfDay = getTimeOfDay();
   return (
     <div className="flex items-center gap-4">
-      {user.photoUrl ? (
+      {user.photoURL ? (
         <Image
-          src={user.photoUrl}
+          src={user.photoURL}
           alt="User Profile Picture"
           width={100}
           height={100}

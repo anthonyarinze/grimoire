@@ -2,7 +2,7 @@ import Link from "next/link";
 
 interface BookLinkProps {
   bookId: string;
-  chilren: React.ReactNode;
+  children: React.ReactNode;
   onClick?: () => void;
 }
 

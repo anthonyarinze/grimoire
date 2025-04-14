@@ -2,16 +2,16 @@
 
 import React, { useState } from "react";
 import { useUser } from "../hooks/useuser";
-import { UserState } from "@/app/lib/types";
 import UserWelcome from "./accountcomponents/userwelcome";
 import StatCard from "./accountcomponents/statcard";
 import { useLibrary } from "../hooks/useLibrary";
 import AccountSettings from "./accountcomponents/accountsettings";
 import EditProfileModal from "./accountcomponents/editprofilemodal";
+import { User } from "firebase/auth";
 
 export default function Account() {
   const { isAuthenticated, user } = useUser();
-  const currentUser = user as UserState;
+  const currentUser = user as User;
   const { library } = useLibrary();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,7 +41,7 @@ export default function Account() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         initialDisplayName={currentUser.displayName ?? ""}
-        initialPhotoUrl={currentUser.photoUrl}
+        initialPhotoUrl={currentUser.photoURL}
         userId={currentUser.uid}
       />
 

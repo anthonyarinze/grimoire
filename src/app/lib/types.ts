@@ -40,7 +40,6 @@ export interface Book {
     };
     language?: string;
     previewLink?: string;
-    infoLink?: string;
     canonicalVolumeLink?: string;
   };
 }

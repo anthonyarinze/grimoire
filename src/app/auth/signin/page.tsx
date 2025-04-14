@@ -38,7 +38,7 @@ export default function SignIn() {
       <div className="p-6 bg-white shadow-md rounded-md">
         <h2 className="text-xl font-bold text-black mb-4">Sign In</h2>
 
-        {error && <p className="text-red-500">{error.message}</p>}
+        {error && <p className="text-red-500">{error}</p>}
 
         <form onSubmit={handleEmailSignIn} className="space-y-3">
           <input

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Book } from "@/app/lib/types";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import placeholder from "../../../../public/placeholder.png";
 
 interface Props {
   book: Book;
@@ -17,7 +18,7 @@ export default function BookHeader({ book }: Props) {
       <div className="flex-shrink-0">
         {volumeInfo.imageLinks?.thumbnail ? (
           <Image
-            src={volumeInfo.imageLinks.thumbnail || null}
+            src={volumeInfo.imageLinks.thumbnail || placeholder}
             height={300}
             width={200}
             alt={volumeInfo.title}

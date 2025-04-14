@@ -6,6 +6,7 @@ import StackingBooksLoader from "../carousel/stackingbooksloader";
 import BookLink from "../ui/booklink";
 import { IoTrendingUp } from "react-icons/io5";
 import placeholder from "../../../../public/placeholder.png";
+import { Book } from "@/app/lib/types";
 
 const categories = [
   "All",

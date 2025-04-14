@@ -1,3 +1,5 @@
+import { Book } from "./types";
+
 export async function fetchBooksByAuthor(author: string) {
   if (!author) throw new Error("Author name is required");
 

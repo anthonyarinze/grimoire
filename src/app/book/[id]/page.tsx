@@ -14,14 +14,16 @@ import { useParams } from "next/navigation";
 export default function BookDetails() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const bookId = typeof id === "string" ? id : undefined;
+
   const {
     data: book,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["book", id],
-    queryFn: () => fetchBookDetails(id),
-    enabled: !!id, // Only fetch if id is truthy
+    queryKey: ["book", bookId],
+    queryFn: () => fetchBookDetails(bookId!), // Use ! since it's guarded by `enabled`
+    enabled: !!bookId,
   });
 
   if (isLoading) return <Spinner />;
@@ -34,8 +36,10 @@ export default function BookDetails() {
     <main className="m-2 p-3 w-[95%] h-full gap-5 text-black flex flex-col">
       <BookHeader book={book} />
       <BookActions />
-      <BookDesccription description={book.volumeInfo.description} />
-      <MoreByAuthor author={book.volumeInfo.authors} />
+      <BookDesccription
+        description={book.volumeInfo.description ?? "No description available."}
+      />
+      <MoreByAuthor author={book.volumeInfo.authors ?? ["Unknown author"]} />
     </main>
   );
 }

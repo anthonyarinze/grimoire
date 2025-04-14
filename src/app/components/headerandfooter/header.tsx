@@ -65,7 +65,7 @@ export default function Header() {
             {isAuthenticated ? (
               <button
                 className="flex items-center text-black gap-2 hover:text-red-600"
-                onClick={logout}
+                onClick={() => logout()}
                 disabled={isPending}
               >
                 {isPending ? (

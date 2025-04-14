@@ -1,21 +1,19 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../firebase";
-import { setUser } from "../slices/userslice";
 import { makeStore } from "../store";
+import { setUser } from "../slices/userslice";
 
-export function getCurrentUser() {
+export function getCurrentUser(): Promise<User | null> {
   return new Promise((resolve) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        // You can still dispatch a simplified user to Redux
         const { uid, email, displayName, photoURL } = user;
-        const userData = { uid, email, displayName, photoURL };
-
-        makeStore().dispatch(setUser(userData));
-        resolve(userData);
-      } else {
-        resolve(null);
+        makeStore().dispatch(setUser({ uid, email, displayName, photoURL }));
       }
-      unsubscribe(); // unusbscrie user after first call
+
+      resolve(user); // Return the full Firebase User object
+      unsubscribe();
     });
   });
 }

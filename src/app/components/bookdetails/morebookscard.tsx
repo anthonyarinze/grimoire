@@ -10,17 +10,23 @@ interface MoreBooksCardProps {
 
 export default function MoreBooksCard({ book }: MoreBooksCardProps) {
   return (
-    <BookLink bookId={book.id}>
-      <div className="text-wrap items-start flex flex-col w-[180px] text-center shrink-0">
-        <Image
-          src={book.volumeInfo.imageLinks?.thumbnail || placeholder}
-          alt={book.volumeInfo.title}
-          className="w-full object-cover rounded-md shadow-md"
-          width={160}
-          height={240}
-        />
-        <p className="mt-2 text-sm font-medium">{book.volumeInfo.title}</p>
-      </div>
-    </BookLink>
+    <>
+      {book.id ? (
+        <BookLink bookId={book.id}>
+          <div className="text-wrap items-start flex flex-col w-[180px] text-center shrink-0">
+            <Image
+              src={book.volumeInfo.imageLinks?.thumbnail || placeholder}
+              alt={book.volumeInfo.title}
+              width={128}
+              height={192}
+              className="rounded mb-2"
+            />
+            <p className="text-sm font-medium truncate">
+              {book.volumeInfo.title}
+            </p>
+          </div>
+        </BookLink>
+      ) : null}
+    </>
   );
 }

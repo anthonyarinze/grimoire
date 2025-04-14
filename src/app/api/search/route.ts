@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("query");
 
@@ -12,7 +12,6 @@ export async function GET(request) {
   }
 
   try {
-    // Determine if the query is an ISBN (check if it contains only numbers and is 10 or 13 digits)
     const isISBN = /^[0-9]{10,13}$/.test(query);
     const url = isISBN
       ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${query}`

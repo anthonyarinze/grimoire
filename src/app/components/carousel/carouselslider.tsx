@@ -8,8 +8,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
-import { Book } from "../lib/types";
 import StackingBooksLoader from "./stackingbooksloader";
+import { Book } from "@/app/lib/types";
+import placeholder from "../../../../public/placeholder.png";
 
 const categories = [
   "fiction",
@@ -99,7 +100,7 @@ export default function PopularBooksCarousel() {
               {books.map((book) => (
                 <div key={book.id} className="flex flex-col items-center w-28">
                   <Image
-                    src={book.volumeInfo.imageLinks?.thumbnail || null}
+                    src={book.volumeInfo.imageLinks?.thumbnail || placeholder}
                     alt={book.volumeInfo.title}
                     width={100}
                     height={130}

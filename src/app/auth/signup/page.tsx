@@ -39,7 +39,7 @@ export default function SignUp() {
       <div className="p-6 bg-white shadow-md rounded-md">
         <h2 className="text-xl font-bold text-black mb-4">Sign Up</h2>
 
-        {error && <p className="text-red-500">{error.message}</p>}
+        {error && <p className="text-red-500">{error}</p>}
 
         <form onSubmit={handleEmailSignUp} className="space-y-3">
           <input

@@ -29,8 +29,8 @@ export default function SearchItem({ results, onSelect }: SearchItemProps) {
               <div className="w-full h-full space-y-4">
                 <SearchItemDetails
                   title={book.volumeInfo.title}
-                  author={book.volumeInfo.authors}
-                  isMature={book.volumeInfo.maturityRating}
+                  author={book.volumeInfo.authors?.join(", ")}
+                  isMature={book.volumeInfo.maturityRating === "MATURE"}
                   rating={book.volumeInfo.averageRating}
                   pageCount={book.volumeInfo.pageCount}
                 />

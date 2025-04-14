@@ -32,7 +32,7 @@ export default function SearchItemDetails({
 
         {/* Author */}
         <p className="text-sm text-gray-600 truncate max-w-full">
-          {author?.join(", ") || "Unknown Author"}
+          {author || "Unknown Author"}
         </p>
       </div>
 
@@ -50,10 +50,10 @@ export default function SearchItemDetails({
             <span>{pageCount}</span>
           </div>
         )}
-        {isMature === "MATURE" && (
+        {isMature && (
           <div className="relative group">
             <Image
-              src={mature || null}
+              src={mature}
               alt="mature"
               height={18}
               width={18}
