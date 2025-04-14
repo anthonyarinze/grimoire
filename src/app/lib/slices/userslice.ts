@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserState } from "../types";
 
@@ -10,6 +8,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    // @ts-expect-error got no clue why this fails
     setUser: (state, action: PayloadAction<UserState>) => {
       return action.payload;
     },
