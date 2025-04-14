@@ -13,7 +13,9 @@ export default function AccountSettings() {
 
   return (
     <section className="mt-8">
-      <h2 className="text-lg font-semibold mb-4">Account Settings</h2>
+      <h2 className="text-lg font-semibold text-black mb-4">
+        Account Settings
+      </h2>
       <div className="flex flex-col gap-3">
         <button
           onClick={() => setShowLogoutConfirm(true)}

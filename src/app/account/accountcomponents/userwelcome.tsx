@@ -26,7 +26,7 @@ export default function UserWelcome({ user }: UserWelcomeProps) {
         </div>
       )}
       <span>
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl text-black font-bold">
           Good {timeOfDay}, {user.displayName || "Bookworm"}!
         </h1>
         <h3 className="text-lg font-thin">{user.email}</h3>

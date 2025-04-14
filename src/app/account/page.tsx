@@ -33,7 +33,7 @@ export default function Account() {
       {/* Edit profile */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="ml-4 mt-4 bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+        className="ml-4 mt-4 text-black bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
       >
         Edit Profile
       </button>
