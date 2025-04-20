@@ -8,7 +8,7 @@ export function useLogout() {
   const { mutate: logout, isPending } = useMutation({
     mutationFn: signOutUser,
     onSuccess: () => {
-      router.push("/");
+      router.push("/auth/login");
       queryClient.invalidateQueries();
     },
   });

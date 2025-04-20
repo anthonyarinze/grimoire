@@ -5,26 +5,38 @@ import SearchBar from "../searchbar/searchbar";
 import Link from "next/link";
 import { useLogout } from "@/app/hooks/uselogout";
 import ProtectedRoute from "../ui/protectedroute";
-import { useUser } from "@/app/hooks/useuser";
 import { IoClose, IoLibrary, IoMenu } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { FiLoader } from "react-icons/fi";
 import { MdLogin } from "react-icons/md";
+import ConfirmDialog from "../ui/confirmdialog";
+import { useAppSelector } from "@/app/lib/hooks";
 
 export default function Header() {
   const { logout, isPending } = useLogout();
-  const { isAuthenticated } = useUser();
+  const user = useAppSelector((state) => state.auth.user);
+  const isAuthenticated = !!user; // Check if user is authenticated
+
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
+
+  const handleLogoutClick = () => {
+    setShowConfirmLogout(true); // Show confirm dialog
+  };
+
+  const handleConfirmLogout = async () => {
+    setShowConfirmLogout(false);
+    await logout();
+  };
 
   return (
     <>
       {/* Header */}
       <header className="h-[4.5rem] px-4 flex items-center font-black justify-between bg-white shadow-lg sticky top-0 z-50">
-        {/* Sidebar Toggle Button */}
         <button onClick={toggleSidebar} className="text-black">
           <IoMenu size={28} />
         </button>
@@ -37,7 +49,6 @@ export default function Header() {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out z-50`}
       >
-        {/* Sidebar Header */}
         <div className="flex items-center justify-between text-black p-4 border-b">
           <Link href="/" className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">Grimoire</h1>
@@ -47,7 +58,6 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Sidebar Links */}
         <ProtectedRoute>
           <nav className="p-4 space-y-4">
             <Link
@@ -65,13 +75,11 @@ export default function Header() {
             {isAuthenticated ? (
               <button
                 className="flex items-center text-black gap-2 hover:text-red-600"
-                onClick={() => logout()}
+                onClick={handleLogoutClick}
                 disabled={isPending}
               >
                 {isPending ? (
-                  <FiLoader size={20} className="animate-spin">
-                    Signing out...
-                  </FiLoader>
+                  <FiLoader size={20} className="animate-spin" />
                 ) : (
                   <>
                     <IoIosLogOut size={20} /> Sign Out
@@ -79,13 +87,26 @@ export default function Header() {
                 )}
               </button>
             ) : (
-              <button className="flex items-center text-black gap-2 hover:text-green-600">
+              <Link
+                href="/auth/login"
+                className="flex items-center text-black gap-2 hover:text-green-600"
+              >
                 <MdLogin size={20} />
-                <Link href="/auth/signin">Login</Link>
-              </button>
+                Login
+              </Link>
             )}
           </nav>
         </ProtectedRoute>
+
+        {!isAuthenticated && (
+          <Link
+            href="/auth/login"
+            className="flex items-center text-black gap-2 hover:text-green-600 p-4"
+          >
+            <MdLogin size={20} />
+            Login
+          </Link>
+        )}
       </div>
 
       {/* Dark Overlay */}
@@ -95,6 +116,17 @@ export default function Header() {
           onClick={closeSidebar}
         />
       )}
+
+      {/* Confirm Logout Dialog */}
+      <ConfirmDialog
+        isOpen={showConfirmLogout}
+        onCancel={() => setShowConfirmLogout(false)}
+        onConfirm={handleConfirmLogout}
+        message="Are you sure you want to sign out?"
+        confirmText="Sign Out"
+        cancelText="Stay Logged In"
+        isPending={isPending}
+      />
     </>
   );
 }

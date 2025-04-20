@@ -1,4 +1,3 @@
-// components/ui/confirmdialog.tsx
 import React from "react";
 
 interface ConfirmDialogProps {

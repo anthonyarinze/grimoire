@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/app/lib/firebase";
 import Button from "../ui/button";
+import { errorNotifier } from "@/app/lib/notifications";
 
 export default function EmailSignIn() {
   const [email, setEmail] = useState("");
@@ -21,8 +22,8 @@ export default function EmailSignIn() {
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } catch {
+      errorNotifier("Invalid email or password. Please try again.");
     }
   };
 
@@ -49,7 +50,7 @@ export default function EmailSignIn() {
         className="text-blue-500"
       >
         {isRegistering
-          ? "Already have an account? Sign In"
+          ? "Already have an account? Login"
           : "Don't have an account? Register"}
       </button>
     </form>

@@ -2,7 +2,7 @@ import React from "react";
 
 type ButtonProps = {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "danger" | "google" | "signIn" | "signUp";
+  variant?: "primary" | "secondary" | "danger" | "google" | "Login" | "signUp";
   size?: "small" | "medium" | "large";
   isLoading?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -23,7 +23,7 @@ export default function Button({
     secondary: "bg-gray-200 text-black hover:bg-gray-300",
     danger: "bg-red-600 text-white hover:bg-red-700",
     google: "bg-white border border-gray-300 text-black hover:bg-gray-100",
-    signIn: "bg-green-600 text-white hover:bg-green-700",
+    Login: "bg-green-600 text-white hover:bg-green-700",
     signUp: "bg-purple-600 text-white hover:bg-purple-700",
   };
 

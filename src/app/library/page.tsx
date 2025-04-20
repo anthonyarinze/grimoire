@@ -1,22 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/app/hooks/useAuth";
 import { db } from "@/app/lib/firebase";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { errorNotifier, successNotifier } from "@/app/lib/notifications";
 import LibraryCard from "@/app/components/library/librarycard";
-import { useUser } from "@/app/hooks/useuser";
 import { LibraryBooks } from "@/app/lib/types";
 import { queryClient } from "@/app/lib/queryClient";
 import Spinner from "../components/ui/spinner";
+import { useAppSelector } from "../lib/hooks";
 
 const filters = ["All", "Want to Read", "Reading", "Finished"];
 
 export default function LibraryPage() {
-  const { isAuthenticated, isLoading: isUserLoading } = useUser();
-  const user = useAuth();
+  const user = useAppSelector((state) => state.auth.user);
+  const isAuthenticated = !!user; // Check if user is authenticated
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [removingBookId, setRemovingBookId] = useState<string | null>(null);
 
@@ -67,7 +66,7 @@ export default function LibraryPage() {
           (book: LibraryBooks) => book?.status === selectedFilter
         );
 
-  if (isUserLoading || isLoading) {
+  if (isLoading) {
     return <Spinner />;
   }
 

@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { useUser } from "../hooks/useuser";
 import UserWelcome from "./accountcomponents/userwelcome";
 import StatCard from "./accountcomponents/statcard";
 import { useLibrary } from "../hooks/useLibrary";
 import AccountSettings from "./accountcomponents/accountsettings";
 import EditProfileModal from "./accountcomponents/editprofilemodal";
 import { User } from "firebase/auth";
+import { useAppSelector } from "../lib/hooks";
 
 export default function Account() {
-  const { isAuthenticated, user } = useUser();
+  const user = useAppSelector((state) => state.auth.user);
+  const isAuthenticated = !!user;
   const currentUser = user as User;
   const { library } = useLibrary();
   const [isModalOpen, setIsModalOpen] = useState(false);

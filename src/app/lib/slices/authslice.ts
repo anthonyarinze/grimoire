@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app"; // Import FirebaseError for proper error handling
 import { app } from "../firebase";
+import { errorNotifier, successNotifier } from "../notifications";
 
 const auth = getAuth(app);
 
@@ -39,6 +40,7 @@ export const signInWithGoogle = createAsyncThunk(
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const { uid, email, displayName, photoURL } = result.user;
+      successNotifier("Login successful! Redirecting to home...");
       return { uid, email, displayName, photoURL };
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -58,11 +60,14 @@ export const signInWithEmail = createAsyncThunk(
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const { uid, email: userEmail, displayName, photoURL } = result.user;
+      successNotifier("Login successful! Redirecting to home...");
       return { uid, email: userEmail, displayName, photoURL };
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         return rejectWithValue(error.message);
+        errorNotifier("Error signing in. Please try again.");
       }
+      errorNotifier("Error signing in. Please try again.");
       return rejectWithValue("An unknown error occurred.");
     }
   }
@@ -81,11 +86,14 @@ export const signUpWithEmail = createAsyncThunk(
         password
       );
       const { uid, email: userEmail, displayName, photoURL } = result.user; // Extract only serializable fields
+      successNotifier("Sign up successful! Redirecting to home...");
       return { uid, email: userEmail, displayName, photoURL };
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
+        errorNotifier("Error signing up. Please try again.");
         return rejectWithValue(error.message);
       }
+      errorNotifier("Error signing up. Please try again.");
       return rejectWithValue("An unknown error occurred.");
     }
   }

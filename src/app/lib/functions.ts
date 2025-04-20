@@ -9,13 +9,12 @@ export const fetchBookDetails = async (
     );
 
     if (!response.ok) {
-      console.error("Error fetching book details:", response.statusText);
+      throw new Error("Network error while fetching book details.");
       return null;
     }
 
     return await response.json();
-  } catch (error) {
-    console.error("Network error fetching book details:", error);
+  } catch {
     return null;
   }
 };

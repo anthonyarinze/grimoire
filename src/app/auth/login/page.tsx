@@ -6,11 +6,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function SignIn() {
+export default function Login() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { user, loading, error } = useAppSelector((state) => state.auth);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,7 +35,7 @@ export default function SignIn() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="p-6 bg-white shadow-md rounded-md">
-        <h2 className="text-xl font-bold text-black mb-4">Sign In</h2>
+        <h2 className="text-xl font-bold text-black mb-4">Login</h2>
 
         {error && <p className="text-red-500">{error}</p>}
 
@@ -64,7 +63,7 @@ export default function SignIn() {
             }`}
             disabled={loading}
           >
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 

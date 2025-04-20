@@ -62,8 +62,8 @@ export default function PopularBooksCarousel() {
       try {
         const books = await fetchAllPopularBooks();
         setPopularBooks(books);
-      } catch (error) {
-        console.error("Error fetching books:", error);
+      } catch {
+        throw new Error("Failed to fetch popular books.");
       } finally {
         setLoading(false);
       }

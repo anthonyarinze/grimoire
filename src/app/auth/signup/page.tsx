@@ -28,9 +28,8 @@ export default function SignUp() {
         .unwrap()
         .then(() => router.push("/home"));
       successNotifier("Sign up successful! Redirecting to home...");
-    } catch (error) {
+    } catch {
       errorNotifier("Error signing up. Please try again.");
-      console.error("Error signing up:", error);
     }
   };
 
@@ -72,10 +71,10 @@ export default function SignUp() {
         <span className="flex gap-1 text-black mt-4">
           <h3>Already have an account? </h3>
           <Link
-            href="/auth/signin"
+            href="/auth/login"
             className="hover:underline hover:text-ceruleanBlue"
           >
-            Sign in
+            Login
           </Link>
         </span>
       </div>

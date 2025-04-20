@@ -1,14 +1,14 @@
-import { useUser } from "@/app/hooks/useuser";
+import { useAppSelector } from "@/app/lib/hooks";
 import React from "react";
-import Spinner from "./spinner";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isLoading } = useUser();
+  const { user } = useAppSelector((state) => state.auth);
 
-  if (isLoading) return <Spinner />;
+  if (!user) return null;
+
   return <main className="flex h-screen text-lg">{children}</main>;
 }

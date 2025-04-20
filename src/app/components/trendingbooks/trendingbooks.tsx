@@ -44,8 +44,8 @@ export default function TrendingBooks() {
         setLoading(true);
         const books = await fetchTrendingBooks(selectedCategory);
         setTrendingBooks(books);
-      } catch (error) {
-        console.error("Error fetching trending books:", error);
+      } catch {
+        setTrendingBooks([]); // Handle error by setting to empty array
       } finally {
         setLoading(false);
       }

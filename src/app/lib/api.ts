@@ -20,8 +20,7 @@ export async function fetchBooksByAuthor(author: string) {
     }
 
     return await response.json();
-  } catch (error) {
-    console.error("Error fetching books:", error);
+  } catch {
     return { books: [] }; // Return empty array on failure
   }
 }

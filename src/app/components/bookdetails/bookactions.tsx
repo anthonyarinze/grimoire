@@ -95,8 +95,7 @@ export default function BookActions() {
         queryKey: ["bookStatus", user?.uid, selectedBook?.id],
       });
     },
-    onError: (error) => {
-      console.error("Error updating book status:", error);
+    onError: () => {
       errorNotifier("Failed to update book status. Please try again.");
     },
   });
