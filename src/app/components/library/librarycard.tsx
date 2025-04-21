@@ -35,7 +35,7 @@ export default function LibraryCard({
           alt={book.title}
           width={100}
           height={150}
-          className="object-cover rounded-md shadow"
+          className="object-cover rounded-md shadow w-[100px] h-[150px]"
         />
 
         {/* Book Info */}

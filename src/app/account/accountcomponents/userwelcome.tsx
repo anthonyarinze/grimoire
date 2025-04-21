@@ -1,20 +1,22 @@
+"use client";
+
 import { getTimeOfDay } from "@/app/lib/functions";
-import { User } from "firebase/auth";
+import { useAppSelector } from "@/app/lib/hooks";
 import Image from "next/image";
 import React from "react";
 import { FaRegUser } from "react-icons/fa";
 
-interface UserWelcomeProps {
-  user: User;
-}
+export default function UserWelcome() {
+  const user = useAppSelector((state) => state.auth.user);
 
-export default function UserWelcome({ user }: UserWelcomeProps) {
+  if (!user) return null; // Return null if user is not logged in
+
   const timeOfDay = getTimeOfDay();
   return (
     <div className="flex items-center gap-4">
       {user.photoURL ? (
         <Image
-          src={user.photoURL}
+          src={user?.photoURL}
           alt="User Profile Picture"
           width={100}
           height={100}

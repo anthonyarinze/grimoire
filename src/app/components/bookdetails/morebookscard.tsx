@@ -21,7 +21,7 @@ export default function MoreBooksCard({ book }: MoreBooksCardProps) {
               height={192}
               className="rounded mb-2"
             />
-            <p className="text-sm font-medium truncate">
+            <p className="text-sm font-medium truncate text-start justify-start text-wrap">
               {book.volumeInfo.title}
             </p>
           </div>
