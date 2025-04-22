@@ -4,7 +4,6 @@ import { IoClose } from "react-icons/io5";
 import ToolTip from "@/app/components/ui/tooltip";
 import { FaSpinner } from "react-icons/fa";
 import Link from "next/link";
-import placeholder from "../../../../public/placeholder.png";
 
 interface LibraryCardProps {
   book: LibraryBooks;
@@ -31,7 +30,7 @@ export default function LibraryCard({
       >
         {/* Book Cover */}
         <Image
-          src={book.cover || placeholder}
+          src={book.cover || "/placeholder.png"}
           alt={book.title}
           width={100}
           height={150}

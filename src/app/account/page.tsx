@@ -29,7 +29,7 @@ export default function Account() {
   return (
     <main className="p-6">
       {/* User welcome */}
-      <UserWelcome user={currentUser} />
+      <UserWelcome />
 
       {/* Edit profile */}
       <button

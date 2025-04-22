@@ -1,5 +1,6 @@
 // TypeScript interfaces for the Google Books API response and user state
 // and for the library books in Firestore
+// and for the open library api call
 export interface Book {
   etag: string;
   id: string;
@@ -58,4 +59,24 @@ export interface LibraryBooks {
   lastModified: string;
   status: string;
   title: string;
+}
+
+export interface OpenLibraryWork {
+  title: string;
+  author_name?: string[];
+  cover_i?: number;
+  key: string;
+  edition_count: number;
+  first_publish_year?: number;
+  availability: {
+    isbn: string | null;
+  };
+}
+
+export interface TrendingBook {
+  id: string;
+  title: string;
+  author: string | string[];
+  cover: string;
+  isbn: string | null;
 }

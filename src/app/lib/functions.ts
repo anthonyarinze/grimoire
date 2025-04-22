@@ -1,4 +1,6 @@
-import { Book } from "./types";
+// utility functions for the app
+
+import { Book, OpenLibraryWork, TrendingBook } from "./types";
 
 export const fetchBookDetails = async (
   bookId: string
@@ -28,4 +30,27 @@ export function getTimeOfDay() {
   } else {
     return "evening";
   }
+}
+
+export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
+  const res = await fetch("https://openlibrary.org/trending/daily.json");
+
+  if (!res.ok) throw new Error("Failed to fetch trending books.");
+
+  const data = await res.json();
+  const books: OpenLibraryWork[] = data.works;
+
+  const filteredBooks = books.filter(
+    (book) => book.availability && book.availability.isbn
+  );
+
+  return filteredBooks.map((book) => ({
+    id: book.key,
+    title: book.title,
+    author: book.author_name?.[0] || "Unknown Author",
+    cover: book.cover_i
+      ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
+      : "/placeholder.png",
+    isbn: book.availability!.isbn, // safe because we filtered for availability + isbn
+  }));
 }
