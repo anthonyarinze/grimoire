@@ -10,7 +10,7 @@ function BookLink({ bookId, children, onClick }: BookLinkProps) {
   return (
     <Link
       href={`/book/${bookId}`}
-      className="block hover:opacity-80 transition duration-200 ease-in-out"
+      className="block shadow-sm cursor-pointer hover:shadow-md transition duration-200 ease-in-out"
       onClick={onClick}
     >
       {children}

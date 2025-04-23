@@ -54,3 +54,17 @@ export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
     isbn: book.availability!.isbn, // safe because we filtered for availability + isbn
   }));
 }
+
+// fetch google books by isbn
+export async function searchGoogleBooksByISBN(
+  isbn: string
+): Promise<string | null> {
+  const res = await fetch(
+    `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
+  );
+  const data = await res.json();
+
+  if (data.totalItems > 0) {
+    return data.items[0].id;
+  } else return null;
+}

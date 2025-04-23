@@ -12,6 +12,7 @@ interface BookCardProps {
     title: string;
     author: string | string[];
     cover: string;
+    isbn: string | null;
   };
 }
 
@@ -43,7 +44,7 @@ export default function BookCard({ book }: BookCardProps) {
   return (
     <div className="relative">
       <Link
-        href={`/book/${book.id}`}
+        href={`/redirect?isbn=${book.isbn}`}
         className="bg-white shadow-md rounded-md p-3 flex flex-col items-center cursor-pointer text-center hover:shadow-lg transition"
       >
         <Image
