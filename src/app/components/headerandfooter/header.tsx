@@ -15,7 +15,7 @@ import { useAppSelector } from "@/app/lib/hooks";
 
 export default function Header() {
   const { logout, isPending } = useLogout();
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => state.user);
   const isAuthenticated = !!user; // Check if user is authenticated
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);

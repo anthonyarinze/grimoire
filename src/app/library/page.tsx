@@ -10,12 +10,12 @@ import { LibraryBooks } from "@/app/lib/types";
 import { queryClient } from "@/app/lib/queryClient";
 import Spinner from "../components/ui/spinner";
 import { useAppSelector } from "../lib/hooks";
+import ProtectedRoute from "../components/ui/protectedroute";
 
 const filters = ["All", "Want to Read", "Reading", "Finished"];
 
 export default function LibraryPage() {
-  const user = useAppSelector((state) => state.auth.user);
-  const isAuthenticated = !!user; // Check if user is authenticated
+  const user = useAppSelector((state) => state.user);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [removingBookId, setRemovingBookId] = useState<string | null>(null);
 
@@ -70,55 +70,47 @@ export default function LibraryPage() {
     return <Spinner />;
   }
 
-  if (!isAuthenticated) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-red-500">
-          You must be signed in to access your library.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-black mb-4">📚 My Library</h1>
+    <ProtectedRoute>
+      <div className="max-w-4xl mx-auto p-6">
+        <h1 className="text-3xl font-bold text-black mb-4">📚 My Library</h1>
 
-      {/* Filter Buttons */}
-      <div className="flex space-x-3 md:text-base text-sm overflow-scroll scrollbar-hide mb-6">
-        {filters.map((filter) => (
-          <button
-            key={filter}
-            onClick={() => setSelectedFilter(filter)}
-            className={`md:px-4 md:py-2 p-[0.7rem] rounded-md  font-semibold transition ${
-              selectedFilter === filter
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white"
-            }`}
-          >
-            {filter}
-          </button>
-        ))}
-      </div>
-
-      {/* Book Grid */}
-      {filteredBooks?.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {filteredBooks.map(
-            (book: LibraryBooks) =>
-              book && (
-                <LibraryCard
-                  key={book.id}
-                  book={book}
-                  onRemove={removeBook}
-                  isPending={removingBookId === book.id}
-                />
-              )
-          )}
+        {/* Filter Buttons */}
+        <div className="flex space-x-3 md:text-base text-sm overflow-scroll scrollbar-hide mb-6">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setSelectedFilter(filter)}
+              className={`md:px-4 md:py-2 p-[0.7rem] rounded-md  font-semibold transition ${
+                selectedFilter === filter
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
         </div>
-      ) : (
-        <p className="text-black">No books found in this category.</p>
-      )}
-    </div>
+
+        {/* Book Grid */}
+        {filteredBooks?.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {filteredBooks.map(
+              (book: LibraryBooks) =>
+                book && (
+                  <LibraryCard
+                    key={book.id}
+                    book={book}
+                    onRemove={removeBook}
+                    isPending={removingBookId === book.id}
+                  />
+                )
+            )}
+          </div>
+        ) : (
+          <p className="text-black">No books found in this category.</p>
+        )}
+      </div>
+    </ProtectedRoute>
   );
 }

@@ -1,14 +1,15 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Spinner from "@/app/components/ui/spinner";
 import { searchGoogleBooksByISBN } from "@/app/lib/functions";
 
 export default function RedirectToBookPage() {
   const router = useRouter();
-  const params = useSearchParams();
-  const isbn = params.get("isbn");
+  const params = useParams();
+
+  const isbn = params.isbn as string; // cast it (it's a string)
 
   useEffect(() => {
     async function findAndRedirect() {
@@ -30,10 +31,8 @@ export default function RedirectToBookPage() {
   }, [isbn, router]);
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <div className="h-screen flex justify-center items-center">
-        <Spinner />
-      </div>
-    </Suspense>
+    <div className="h-screen flex justify-center items-center">
+      <Spinner />
+    </div>
   );
 }

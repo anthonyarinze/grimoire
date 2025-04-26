@@ -6,67 +6,64 @@ import StatCard from "./accountcomponents/statcard";
 import { useLibrary } from "../hooks/useLibrary";
 import AccountSettings from "./accountcomponents/accountsettings";
 import EditProfileModal from "./accountcomponents/editprofilemodal";
-import { User } from "firebase/auth";
 import { useAppSelector } from "../lib/hooks";
+import ProtectedRoute from "../components/ui/protectedroute";
 
 export default function Account() {
-  const user = useAppSelector((state) => state.auth.user);
-  const isAuthenticated = !!user;
-  const currentUser = user as User;
-  const { library } = useLibrary();
+  const user = useAppSelector((state) => state.user);
+  const { library, isLoading } = useLibrary();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (!isAuthenticated || !currentUser) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-red-500">
-          You must be signed in to access your account information.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <main className="p-6">
-      {/* User welcome */}
-      <UserWelcome />
+    <ProtectedRoute>
+      <main className="p-6">
+        {/* User welcome */}
+        <UserWelcome />
 
-      {/* Edit profile */}
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="ml-4 mt-4 text-black bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-      >
-        Edit Profile
-      </button>
-      <EditProfileModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        initialDisplayName={currentUser.displayName ?? ""}
-        initialPhotoUrl={currentUser.photoURL}
-        userId={currentUser.uid}
-      />
+        {/* Edit profile */}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="ml-4 mt-4 text-black bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+        >
+          Edit Profile
+        </button>
+        <EditProfileModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          initialDisplayName={user.displayName ?? ""}
+          initialPhotoUrl={user.photoURL}
+          userId={user.uid}
+        />
 
-      {/* Reading stats */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-        <StatCard label="Total" value={library.length} />
-        <StatCard
-          label="Want to Read"
-          value={
-            library.filter((book) => book.status === "Want to Read").length
-          }
-        />
-        <StatCard
-          label="Reading"
-          value={library.filter((book) => book.status === "Reading").length}
-        />
-        <StatCard
-          label="Finished"
-          value={library.filter((book) => book.status === "Finished").length}
-        />
-      </section>
+        {/* Reading stats */}
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+          <StatCard
+            label="Total"
+            isLoading={isLoading}
+            value={library.length}
+          />
+          <StatCard
+            label="Want to Read"
+            isLoading={isLoading}
+            value={
+              library.filter((book) => book.status === "Want to Read").length
+            }
+          />
+          <StatCard
+            label="Reading"
+            isLoading={isLoading}
+            value={library.filter((book) => book.status === "Reading").length}
+          />
+          <StatCard
+            label="Finished"
+            isLoading={isLoading}
+            value={library.filter((book) => book.status === "Finished").length}
+          />
+        </section>
 
-      {/* Account settings */}
-      <AccountSettings />
-    </main>
+        {/* Account settings */}
+        <AccountSettings />
+      </main>
+    </ProtectedRoute>
   );
 }

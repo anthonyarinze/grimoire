@@ -7,7 +7,7 @@ import React from "react";
 import { FaRegUser } from "react-icons/fa";
 
 export default function UserWelcome() {
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => state.user);
 
   if (!user) return null; // Return null if user is not logged in
 

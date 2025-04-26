@@ -13,6 +13,16 @@ export default {
         foreground: "var(--foreground)",
         ceruleanBlue: "#2a52be",
       },
+      animation: {
+        "fade-in": "fadeIn 0.8s ease-out forwards",
+        "fade-in-delay": "fadeIn 1.2s ease-out forwards",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
     },
   },
   plugins: [],

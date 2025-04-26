@@ -5,14 +5,10 @@ import { useAuth } from "./useAuth";
 import { LibraryBooks } from "@/app/lib/types";
 
 export function useLibrary() {
-  const user = useAuth();
+  const currentUser = useAuth();
+  const user = currentUser?.user;
 
-  const {
-    data: library = [],
-    isLoading,
-    isError,
-    error,
-  } = useQuery<LibraryBooks[]>({
+  const { data: library = [], isLoading } = useQuery<LibraryBooks[]>({
     queryKey: ["userLibrary", user?.uid],
     queryFn: async () => {
       if (!user?.uid) return [];
@@ -30,5 +26,5 @@ export function useLibrary() {
     enabled: !!user?.uid,
   });
 
-  return { library, isLoading, isError, error };
+  return { library, isLoading };
 }

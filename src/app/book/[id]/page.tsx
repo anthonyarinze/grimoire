@@ -7,7 +7,7 @@ import MoreByAuthor from "@/app/components/bookdetails/morebyauthor";
 import Spinner from "@/app/components/ui/spinner";
 import { fetchBookDetails } from "@/app/lib/functions";
 import { useAppDispatch } from "@/app/lib/hooks";
-import { setSelectedBook } from "@/app/lib/slices/searchSlice";
+import { setSelectedBook } from "@/app/lib/slices/searchslice";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 

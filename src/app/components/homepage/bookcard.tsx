@@ -29,7 +29,6 @@ export default function BookCard({ book }: BookCardProps) {
       router.push("/auth/login");
       return;
     }
-
     // Add to library logic here
   };
 
@@ -44,7 +43,7 @@ export default function BookCard({ book }: BookCardProps) {
   return (
     <div className="relative">
       <Link
-        href={`/redirect?isbn=${book.isbn}`}
+        href={`/redirect/isbn/${book.isbn}`}
         className="bg-white shadow-md rounded-md p-3 flex flex-col items-center cursor-pointer text-center hover:shadow-lg transition"
       >
         <Image
