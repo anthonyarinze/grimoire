@@ -7,7 +7,7 @@ interface Props {
   onClose: () => void;
   initialDisplayName: string;
   initialPhotoUrl: string | null;
-  userId: string;
+  userId: string | null;
 }
 
 export default function EditProfileModal({
@@ -17,7 +17,7 @@ export default function EditProfileModal({
   initialPhotoUrl,
 }: Props) {
   const [displayName, setDisplayName] = useState(initialDisplayName);
-  const [photoUrl, setPhotoUrl] = useState(initialPhotoUrl ?? "");
+  const [photoURL, setPhotoUrl] = useState(initialPhotoUrl ?? "");
   const [previewError, setPreviewError] = useState(false);
   const { update, isPending } = useUpdateProfile();
 
@@ -26,7 +26,7 @@ export default function EditProfileModal({
     return /\.(jpg|jpeg|png|gif|webp)$/.test(url);
   };
 
-  const isImageValid = photoUrl === "" || isValidImageUrl(photoUrl);
+  const isImageValid = photoURL === "" || isValidImageUrl(photoURL);
 
   const isDisplayNameValid = displayName.trim().length > 0;
   const isFormValid = isDisplayNameValid && isImageValid;
@@ -41,7 +41,7 @@ export default function EditProfileModal({
     e.preventDefault();
     if (!isFormValid) return; // Prevent submission if form is invalid
 
-    await update({ displayName, photoUrl });
+    await update({ displayName, photoURL });
     onClose();
     resetForm(); // Reset form after submission
   };
@@ -72,9 +72,9 @@ export default function EditProfileModal({
           {/* Upload + Preview */}
           <div>
             <label className="block text-sm font-medium">Profile Image</label>
-            {photoUrl && isValidImageUrl(photoUrl) && (
+            {photoURL && isValidImageUrl(photoURL) && (
               <Image
-                src={previewError ? "/default-avatar.png" : photoUrl}
+                src={previewError ? "/default-avatar.png" : photoURL}
                 height={96}
                 width={96}
                 alt="Profile preview"
@@ -86,9 +86,9 @@ export default function EditProfileModal({
 
             <input
               type="text"
-              name="photoUrl"
+              name="photoURL"
               placeholder="Image URL"
-              value={photoUrl}
+              value={photoURL}
               onChange={(e) => {
                 setPhotoUrl(e.target.value);
                 setPreviewError(false); // Reset preview error if user types again
@@ -101,13 +101,13 @@ export default function EditProfileModal({
               online for now. Valid formats: .jpg, .jpeg, .png, .gif, .webp
             </p>
 
-            {!isValidImageUrl(photoUrl) && photoUrl && (
+            {!isValidImageUrl(photoURL) && photoURL && (
               <p className="text-xs text-red-500 mt-1">
                 That doesn’t look like a valid image URL.
               </p>
             )}
           </div>
-          {photoUrl && !isImageValid && (
+          {photoURL && !isImageValid && (
             <p className="text-red-500 text-sm mt-1">
               I only support image links that point directly to a photo hosted
               online (e.g., ending in .jpg, .png, etc). I hope to incorporate

@@ -6,7 +6,7 @@ import { UserState } from "../lib/types";
 
 interface UpdateProfileData {
   displayName?: string;
-  photoUrl?: string;
+  photoURL?: string;
 }
 
 export function useUpdateProfile() {
@@ -15,20 +15,20 @@ export function useUpdateProfile() {
     isPending,
     error,
   } = useMutation({
-    mutationFn: async ({ displayName, photoUrl }: UpdateProfileData) => {
+    mutationFn: async ({ displayName, photoURL }: UpdateProfileData) => {
       const user = auth.currentUser;
       if (!user) throw new Error("No authenticated user");
 
       await updateProfile(user, {
         displayName,
-        photoURL: photoUrl,
+        photoURL: photoURL,
       });
 
       //manually update the "user" cache with the new data
       queryClient.setQueryData(["user"], (prev: UserState) => ({
         ...prev,
         displayName,
-        photoUrl,
+        photoURL,
       }));
 
       // Optionally return updated user

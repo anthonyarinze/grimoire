@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@/app/hooks/useAuth";
 import { useAppSelector } from "@/app/lib/hooks";
 import { FcReading } from "react-icons/fc";
 import { IoCheckmarkDone, IoLibrary } from "react-icons/io5";
@@ -29,7 +28,7 @@ const statuses = [
 
 export default function BookActions() {
   const selectedBook = useAppSelector((state) => state.search.selectedBook);
-  const user = useAuth();
+  const user = useAppSelector((state) => state.user);
 
   // Fetch book status from firestore using react query
   const { data: bookStatus, isLoading } = useQuery({

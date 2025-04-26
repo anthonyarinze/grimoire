@@ -18,7 +18,7 @@ export default function UserRefresher() {
             uid: user.uid,
             email: user.email,
             displayName: user.displayName,
-            photoUrl: user.photoURL,
+            photoURL: user.photoURL,
           })
         );
       } else {
