@@ -21,7 +21,7 @@ export default function BookCard({ book }: BookCardProps) {
     <div className="relative">
       <Link
         href={`/redirect/isbn/${book.isbn}`}
-        className="bg-white shadow-md rounded-md p-3 flex flex-col items-center cursor-pointer text-center hover:shadow-lg transition"
+        className="bg-white shadow-md rounded-md w-full p-3 flex flex-col items-center cursor-pointer text-center hover:shadow-lg transition"
       >
         <Image
           src={book.cover || "/placeholder.png"}
@@ -30,7 +30,7 @@ export default function BookCard({ book }: BookCardProps) {
           height={150}
           className="object-cover rounded-md shadow w-[100px] h-[150px]"
         />
-        <h3 className="mt-2 text-sm font-medium truncate text-black">
+        <h3 className="mt-2 w-full text-sm font-medium truncate text-black">
           {book.title}
         </h3>
         <p className="text-xs text-gray-500">{displayAuthor}</p>
