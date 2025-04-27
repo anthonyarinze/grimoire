@@ -8,7 +8,7 @@ export default function HeroSection() {
         Discover, track, and manage your reading journey.
       </p>
       <Link
-        href="/"
+        href="/explore"
         className="inline-block px-6 py-3 bg-ceruleanBlue text-white font-semibold rounded hover:bg-blue-700 transition"
       >
         Explore Books

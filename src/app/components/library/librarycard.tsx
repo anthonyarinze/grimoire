@@ -38,8 +38,12 @@ export default function LibraryCard({
         />
 
         {/* Book Info */}
-        <h3 className="mt-2 text-sm font-medium text-black">{book.title}</h3>
-        <p className="text-xs text-gray-500">{book.authors?.join(", ")}</p>
+        <h3 className="mt-2 text-sm font-medium text-black truncate">
+          {book.title}
+        </h3>
+        <p className="text-xs text-gray-500 truncate">
+          {book.authors?.join(", ")}
+        </p>
 
         {/* Status Label */}
         <span

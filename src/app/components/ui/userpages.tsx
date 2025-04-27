@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { FaUser } from "react-icons/fa";
 import { FiLoader } from "react-icons/fi";
@@ -17,21 +18,32 @@ export default function UserPages({
   isPending,
   handleLogoutClick,
 }: UserPagesProps) {
+  const pathname = usePathname();
   return (
     <>
       <nav className="p-4 space-y-4">
         <Link
           href="/account"
-          className="flex items-center text-black gap-2 hover:text-ceruleanBlue"
+          className={`flex items-center gap-2 ${
+            pathname === "/account"
+              ? "text-ceruleanBlue"
+              : "text-black hover:text-ceruleanBlue"
+          }`}
         >
           <FaUser size={20} /> Account
         </Link>
+
         <Link
           href="/library"
-          className="flex items-center text-black gap-2 hover:text-ceruleanBlue"
+          className={`flex items-center gap-2 ${
+            pathname.startsWith("/library")
+              ? "text-ceruleanBlue"
+              : "text-black hover:text-ceruleanBlue"
+          }`}
         >
           <IoLibrary size={20} /> Library
         </Link>
+
         {isAuthenticated ? (
           <button
             className="flex items-center text-black gap-2 hover:text-red-600"

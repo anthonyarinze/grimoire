@@ -12,10 +12,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const shouldShowHeader = !hideHeaderRoutes.includes(pathname);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       {shouldShowHeader && <Header />}
-      <main>{children}</main>
+      <main className="flex-grow pb-8">{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }

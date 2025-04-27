@@ -27,7 +27,7 @@ export default function UserWelcomeSection() {
             Go to My Library
           </Link>
           <Link
-            href="/discover"
+            href="/explore"
             className="inline-block px-6 py-3 border border-ceruleanBlue text-ceruleanBlue rounded-md font-medium hover:bg-blue-50 transition"
           >
             Discover Books

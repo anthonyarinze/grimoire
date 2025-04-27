@@ -30,7 +30,7 @@ export default function FeaturedBooksGrid() {
 
           <div className="mt-10 text-center">
             <Link
-              href="/"
+              href="/explore"
               className="inline-block px-6 py-3 bg-ceruleanBlue text-white font-semibold rounded-md hover:bg-blue-700 transition"
             >
               Explore More
