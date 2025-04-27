@@ -49,6 +49,7 @@ export interface UserState {
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
+  loading: boolean;
 }
 
 export interface LibraryBooks {

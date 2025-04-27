@@ -4,19 +4,15 @@ import React, { useState } from "react";
 import SearchBar from "../searchbar/searchbar";
 import Link from "next/link";
 import { useLogout } from "@/app/hooks/uselogout";
-import ProtectedRoute from "../ui/protectedroute";
-import { IoClose, IoLibrary, IoMenu } from "react-icons/io5";
-import { FaUser } from "react-icons/fa";
-import { IoIosLogOut } from "react-icons/io";
-import { FiLoader } from "react-icons/fi";
-import { MdLogin } from "react-icons/md";
 import ConfirmDialog from "../ui/confirmdialog";
 import { useAppSelector } from "@/app/lib/hooks";
+import { IoClose, IoMenu } from "react-icons/io5";
+import UserPages from "../ui/userpages";
+import { successNotifier } from "@/app/lib/notifications";
 
 export default function Header() {
   const { logout, isPending } = useLogout();
-  const user = useAppSelector((state) => state.user);
-  const isAuthenticated = !!user; // Check if user is authenticated
+  const user = useAppSelector((state) => state.auth.user);
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
@@ -31,6 +27,9 @@ export default function Header() {
   const handleConfirmLogout = async () => {
     setShowConfirmLogout(false);
     await logout();
+    closeSidebar();
+    successNotifier("Successfully logged out.");
+    console.log("user:", user);
   };
 
   return (
@@ -58,55 +57,11 @@ export default function Header() {
           </button>
         </div>
 
-        <ProtectedRoute>
-          <nav className="p-4 space-y-4">
-            <Link
-              href="/account"
-              className="flex items-center text-black gap-2 hover:text-ceruleanBlue"
-            >
-              <FaUser size={20} /> Account
-            </Link>
-            <Link
-              href="/library"
-              className="flex items-center text-black gap-2 hover:text-ceruleanBlue"
-            >
-              <IoLibrary size={20} /> Library
-            </Link>
-            {isAuthenticated ? (
-              <button
-                className="flex items-center text-black gap-2 hover:text-red-600"
-                onClick={handleLogoutClick}
-                disabled={isPending}
-              >
-                {isPending ? (
-                  <FiLoader size={20} className="animate-spin" />
-                ) : (
-                  <>
-                    <IoIosLogOut size={20} /> Sign Out
-                  </>
-                )}
-              </button>
-            ) : (
-              <Link
-                href="/auth/login"
-                className="flex items-center text-black gap-2 hover:text-green-600"
-              >
-                <MdLogin size={20} />
-                Login
-              </Link>
-            )}
-          </nav>
-        </ProtectedRoute>
-
-        {!isAuthenticated && (
-          <Link
-            href="/auth/login"
-            className="flex items-center text-black gap-2 hover:text-green-600 p-4"
-          >
-            <MdLogin size={20} />
-            Login
-          </Link>
-        )}
+        <UserPages
+          isAuthenticated={!!user}
+          isPending={isPending}
+          handleLogoutClick={handleLogoutClick}
+        />
       </div>
 
       {/* Dark Overlay */}

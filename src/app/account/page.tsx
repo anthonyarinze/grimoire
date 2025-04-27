@@ -10,7 +10,7 @@ import { useAppSelector } from "../lib/hooks";
 import ProtectedRoute from "../components/ui/protectedroute";
 
 export default function Account() {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.auth.user);
   const { library, isLoading } = useLibrary();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -30,9 +30,9 @@ export default function Account() {
         <EditProfileModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          initialDisplayName={user.displayName ?? ""}
-          initialPhotoUrl={user.photoURL}
-          userId={user.uid}
+          initialDisplayName={user?.displayName ?? ""}
+          initialPhotoUrl={user?.photoURL}
+          userId={user?.uid}
         />
 
         {/* Reading stats */}

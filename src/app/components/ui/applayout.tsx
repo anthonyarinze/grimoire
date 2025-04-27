@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Header from "../headerandfooter/header";
+import Footer from "../headerandfooter/footer";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -14,6 +15,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <>
       {shouldShowHeader && <Header />}
       <main>{children}</main>
+      <Footer />
     </>
   );
 }

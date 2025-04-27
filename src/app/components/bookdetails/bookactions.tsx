@@ -28,7 +28,7 @@ const statuses = [
 
 export default function BookActions() {
   const selectedBook = useAppSelector((state) => state.search.selectedBook);
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.auth.user);
 
   // Fetch book status from firestore using react query
   const { data: bookStatus, isLoading } = useQuery({

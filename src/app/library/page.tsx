@@ -15,7 +15,7 @@ import ProtectedRoute from "../components/ui/protectedroute";
 const filters = ["All", "Want to Read", "Reading", "Finished"];
 
 export default function LibraryPage() {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.auth.user);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [removingBookId, setRemovingBookId] = useState<string | null>(null);
 

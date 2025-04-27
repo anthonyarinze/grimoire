@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import {
   getAuth,
   signInWithPopup,
@@ -13,14 +13,16 @@ import { errorNotifier, successNotifier } from "../notifications";
 
 const auth = getAuth(app);
 
+interface User {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+}
+
 // Define the shape of the authentication state
 interface AuthState {
-  user: {
-    uid: string;
-    email: string | null;
-    displayName: string | null;
-    photoURL: string | null;
-  } | null;
+  user: User | null;
   loading: boolean;
   error: string | null; // Store only the error message instead of an object
 }
@@ -106,7 +108,11 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser(state, action: PayloadAction<User | null>) {
+      state.user = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signInWithGoogle.pending, (state) => {
@@ -166,4 +172,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { setUser } = authSlice.actions;
 export default authSlice.reducer;

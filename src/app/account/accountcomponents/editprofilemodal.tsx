@@ -6,8 +6,8 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   initialDisplayName: string;
-  initialPhotoUrl: string | null;
-  userId: string | null;
+  initialPhotoUrl: string | null | undefined;
+  userId: string | null | undefined;
 }
 
 export default function EditProfileModal({

@@ -22,7 +22,7 @@ export default function BookDetails() {
     error,
   } = useQuery({
     queryKey: ["book", bookId],
-    queryFn: () => fetchBookDetails(bookId!), // Use ! since it's guarded by `enabled`
+    queryFn: () => fetchBookDetails(bookId!),
     enabled: !!bookId,
   });
 

@@ -9,10 +9,10 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const user = useAppSelector((state) => state.user);
+  const { user, loading } = useAppSelector((state) => state.auth);
 
-  if (user === undefined) {
-    // 👈 Undefined means we are still loading
+  if (loading) {
+    // loading user
     return (
       <div className="flex justify-center items-center p-4">
         <FaSpinner className="text-gray-500 animate-spin text-2xl" />
@@ -21,11 +21,11 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   // 👈 Auth check is done and user is not logged in
-  if (user === null) {
+  if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
         <p className="text-red-500">
-          You must be logged in to access this feature.
+          You must be logged in to access this page.
         </p>
       </div>
     );

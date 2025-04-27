@@ -3,8 +3,8 @@
 import { useAuth } from "@/app/hooks/useAuth";
 import { useEffect } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { setUser } from "@/app/lib/slices/userslice";
 import { useAppDispatch } from "@/app/lib/hooks";
+import { setUser } from "@/app/lib/slices/authslice";
 
 export default function UserRefresher() {
   const { user, loading } = useAuth();
