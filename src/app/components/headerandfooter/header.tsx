@@ -29,7 +29,6 @@ export default function Header() {
     await logout();
     closeSidebar();
     successNotifier("Successfully logged out.");
-    console.log("user:", user);
   };
 
   return (

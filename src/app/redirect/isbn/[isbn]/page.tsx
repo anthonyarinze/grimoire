@@ -1,38 +1,41 @@
 "use client";
-
 import { useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
-import Spinner from "@/app/components/ui/spinner";
-import { searchGoogleBooksByISBN } from "@/app/lib/functions";
+import { useParams, useRouter } from "next/navigation";
+import { infoNotifier } from "@/app/lib/notifications";
 
 export default function RedirectToBookPage() {
   const router = useRouter();
   const params = useParams();
 
-  const isbn = params.isbn as string; // cast it (it's a string)
+  const isbn = params.isbn as string;
 
   useEffect(() => {
     async function findAndRedirect() {
-      if (!isbn) {
-        router.push("/book-not-found");
-        return;
-      }
+      try {
+        const res = await fetch(`/api/search-isbn?isbn=${isbn}`);
 
-      const googleBookId = await searchGoogleBooksByISBN(isbn);
+        if (!res.ok) {
+          const errorData = await res.json();
+          infoNotifier(errorData.error || "Book not found.");
+          router.replace("/book-not-found");
+          return;
+        }
 
-      if (googleBookId) {
-        router.push(`/book/${googleBookId}`);
-      } else {
-        router.push("/book-not-found");
+        const { id, fallback } = await res.json();
+
+        if (fallback) {
+          infoNotifier("Redirected to the English version of this book.");
+        }
+
+        router.replace(`/book/${id}`);
+      } catch {
+        infoNotifier("Something went wrong. Please try again.");
+        router.replace("/book-not-found");
       }
     }
 
     findAndRedirect();
   }, [isbn, router]);
 
-  return (
-    <div className="h-screen flex justify-center items-center">
-      <Spinner />
-    </div>
-  );
+  return null;
 }

@@ -16,7 +16,7 @@ export default function FeaturedBooksGrid() {
 
       {isError && (
         <p className="text-center text-red-500">
-          Failed to load trending books.
+          Failed to load trending books. Please try again later.
         </p>
       )}
 

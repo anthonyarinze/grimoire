@@ -69,7 +69,7 @@ export interface OpenLibraryWork {
   key: string;
   edition_count: number;
   first_publish_year?: number;
-  language: string[];
+  language?: string[];
   availability: {
     isbn: string | null;
   };
@@ -81,4 +81,5 @@ export interface TrendingBook {
   author: string | string[];
   cover: string;
   isbn: string | null;
+  language?: string[];
 }

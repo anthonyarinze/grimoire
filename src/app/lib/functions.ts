@@ -1,5 +1,6 @@
 // utility functions for the app
 
+import { infoNotifier } from "./notifications";
 import { Book, OpenLibraryWork, TrendingBook } from "./types";
 
 export const fetchBookDetails = async (
@@ -33,16 +34,22 @@ export function getTimeOfDay() {
 }
 
 export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
-  const res = await fetch("https://openlibrary.org/trending/daily.json");
+  const res = await fetch("/api/trending");
 
-  if (!res.ok) throw new Error("Failed to fetch trending books.");
+  if (!res.ok)
+    throw new Error("Failed to fetch trending books. Please try again later.");
 
   const data = await res.json();
+
   const books: OpenLibraryWork[] = data.works;
 
-  const filteredBooks = books.filter(
-    (book) => book.availability.isbn && book.language.includes("eng")
-  );
+  const filteredBooks = books.filter((book) => {
+    return (
+      Array.isArray(book.language) &&
+      book.language.includes("eng") &&
+      book.availability?.isbn
+    );
+  });
 
   return filteredBooks.map((book) => ({
     id: book.key,
@@ -51,7 +58,7 @@ export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
     cover: book.cover_i
       ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
       : "/placeholder.png",
-    isbn: book.availability!.isbn, // safe because we filtered for availability + isbn
+    isbn: book.availability!.isbn,
   }));
 }
 
@@ -59,12 +66,15 @@ export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
 export async function searchGoogleBooksByISBN(
   isbn: string
 ): Promise<string | null> {
-  const res = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
-  );
+  const res = await fetch(`/api/search-isbn?isbn=${isbn}`);
+
+  if (!res.ok) return null;
+
   const data = await res.json();
 
-  if (data.totalItems > 0) {
-    return data.items[0].id;
-  } else return null;
+  if (data.fallback) {
+    infoNotifier("Redirected to the English edition of this book.");
+  }
+
+  return data.id || null;
 }
