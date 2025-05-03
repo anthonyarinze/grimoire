@@ -41,7 +41,7 @@ export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
   const books: OpenLibraryWork[] = data.works;
 
   const filteredBooks = books.filter(
-    (book) => book.availability && book.availability.isbn
+    (book) => book.availability.isbn && book.language === "eng"
   );
 
   return filteredBooks.map((book) => ({
