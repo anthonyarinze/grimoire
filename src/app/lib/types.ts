@@ -69,7 +69,7 @@ export interface OpenLibraryWork {
   key: string;
   edition_count: number;
   first_publish_year?: number;
-  language?: string[];
+  language: string[];
   availability: {
     isbn: string | null;
   };
