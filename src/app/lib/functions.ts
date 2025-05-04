@@ -2,25 +2,6 @@
 
 import { Book, OpenLibraryWork, TrendingBook } from "./types";
 
-export const fetchBookDetails = async (
-  bookId: string
-): Promise<Book | null> => {
-  try {
-    const response = await fetch(
-      `https://www.googleapis.com/books/v1/volumes/${bookId}`
-    );
-
-    if (!response.ok) {
-      throw new Error("Network error while fetching book details.");
-      return null;
-    }
-
-    return await response.json();
-  } catch {
-    return null;
-  }
-};
-
 export function getTimeOfDay() {
   const currentHour = new Date().getHours();
   if (currentHour < 12) {
@@ -30,6 +11,35 @@ export function getTimeOfDay() {
   } else {
     return "evening";
   }
+}
+
+export async function fetchBooks(query: string): Promise<Book[]> {
+  const response = await fetch(
+    `/api/search?query=${encodeURIComponent(query)}`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to search results. Please try again later.");
+  }
+
+  const data = await response.json();
+
+  return data.items ?? [];
+}
+
+export async function fetchBookById(id: string): Promise<Book> {
+  const response = await fetch(`/api/search?query=${id}&type=id`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch book by ID");
+  }
+
+  const data = await response.json();
+
+  if (data.error) {
+    throw new Error(data.error);
+  }
+
+  return data;
 }
 
 export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
@@ -55,17 +65,4 @@ export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
       : "/placeholder.png",
     isbn: book.availability!.isbn,
   }));
-}
-
-// fetch google books by isbn
-export async function searchGoogleBooksByISBN(
-  isbn: string
-): Promise<string | null> {
-  const res = await fetch(`/api/search-isbn?isbn=${isbn}`);
-
-  if (!res.ok) return null;
-
-  const data = await res.json();
-
-  return data.id || null;
 }

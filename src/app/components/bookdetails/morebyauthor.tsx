@@ -2,25 +2,28 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchBooksByAuthor } from "@/app/lib/api";
 import { Book } from "@/app/lib/types";
 import MoreBooksCard from "./morebookscard";
+import { fetchBooks } from "@/app/lib/functions";
 
 interface MoreByAuthorProps {
   author: string | string[];
 }
 
 export default function MoreByAuthor({ author }: MoreByAuthorProps) {
-  // ✅ Normalize author data to extract only the first author
-  const firstAuthor = Array.isArray(author) // If it's an array, take the first element
+  const firstAuthor = Array.isArray(author)
     ? author[0].trim()
-    : author.includes(",") // If it's a comma-separated string, split and take the first part
+    : author.includes(",")
     ? author.split(",")[0].trim()
-    : author.trim(); // Otherwise, just use it directly
+    : author.trim();
 
-  const { data, isLoading, isError } = useQuery({
+  const {
+    data: books = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["booksByAuthor", firstAuthor],
-    queryFn: () => fetchBooksByAuthor(firstAuthor),
+    queryFn: () => fetchBooks(`inauthor:"${firstAuthor}"`),
     enabled: !!author,
   });
 
@@ -30,12 +33,10 @@ export default function MoreByAuthor({ author }: MoreByAuthorProps) {
   return (
     <section className="mt-8">
       <h2 className="text-2xl font-semibold mb-4">More by {firstAuthor}</h2>
-
-      {/* ✅ Horizontal Scroll Container */}
       <div className="overflow-x-auto scrollbar-hide">
         <div className="flex gap-4 whitespace-nowrap">
-          {data?.items.length > 0 ? (
-            data.items.map((book: Book) => (
+          {books.length > 0 ? (
+            books.map((book: Book) => (
               <MoreBooksCard key={book.id} book={book} />
             ))
           ) : (

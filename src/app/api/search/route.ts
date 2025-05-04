@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("query");
+  const type = searchParams.get("type") || "query"; // "query" | "isbn" | "id"
 
   if (!query) {
     return NextResponse.json(
@@ -12,12 +13,24 @@ export async function GET(request: Request) {
   }
 
   try {
-    const isISBN = /^[0-9]{10,13}$/.test(query);
-    const url = isISBN
-      ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${query}`
-      : `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
+    let url = "";
+
+    switch (type) {
+      case "id":
+        url = `https://www.googleapis.com/books/v1/volumes/${query}`;
+        break;
+
+      case "isbn":
+        url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${query}`;
+        break;
+
+      case "query":
+      default:
+        url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
           query
         )}`;
+        break;
+    }
 
     const response = await fetch(url);
     if (!response.ok) {

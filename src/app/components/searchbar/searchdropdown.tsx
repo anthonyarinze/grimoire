@@ -1,16 +1,20 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SearchItem from "./searchitem";
 import ProgressBar from "./progressbar";
-import { fetchBooks } from "@/app/lib/api";
+import { fetchBooks } from "@/app/lib/functions";
+
+interface SearchDropdownProps {
+  query: string;
+  onSelectResult: () => void;
+}
 
 export default function SearchDropdown({
   query,
   onSelectResult,
-}: {
-  query: string;
-  onSelectResult: () => void;
-}) {
+}: SearchDropdownProps) {
   const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +42,7 @@ export default function SearchDropdown({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dropdownRef]);
+  }, []);
 
   if (fetchError) return <p>Error: {fetchError.message}</p>;
 
@@ -50,15 +54,9 @@ export default function SearchDropdown({
             <ProgressBar />
           ) : (
             <>
-              {/* Top gradient for scroll cue */}
-              <div className="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-gray-100 to-transparent z-10 pointer-events-none"></div>
-              {/* Content */}
-              <SearchItem
-                results={data?.items || []}
-                onSelect={onSelectResult}
-              />
-              {/* Bottom gradient for scroll cue */}
-              <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-100 to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-gray-100 to-transparent z-10 pointer-events-none" />
+              <SearchItem results={data || []} onSelect={onSelectResult} />
+              <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-100 to-transparent z-10 pointer-events-none" />
             </>
           )}
         </div>

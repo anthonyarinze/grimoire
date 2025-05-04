@@ -18,9 +18,9 @@ export default function MoreBooksCard({ book }: MoreBooksCardProps) {
               alt={book.volumeInfo.title}
               width={128}
               height={192}
-              className="rounded mb-2 w-auto h-auto object-cover"
+              className="rounded min-w-[128px] min-h-[192px] mb-2 object-cover"
             />
-            <p className="text-sm font-medium truncate text-start justify-start text-wrap">
+            <p className="text-sm font-medium truncate line-clamp-2 text-center justify-center text-wrap">
               {book.volumeInfo.title}
             </p>
           </div>

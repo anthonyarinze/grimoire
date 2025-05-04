@@ -10,6 +10,7 @@ export function useTrendingBooks() {
     isError,
   } = useQuery({
     queryKey: ["trendingBooks"],
+    retry: 1,
     queryFn: fetchTrendingBooks,
     staleTime: 1000 * 60 * 60 * 6, // 6 hours
   });
