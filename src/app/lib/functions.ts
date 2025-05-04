@@ -1,6 +1,5 @@
 // utility functions for the app
 
-import { infoNotifier } from "./notifications";
 import { Book, OpenLibraryWork, TrendingBook } from "./types";
 
 export const fetchBookDetails = async (
@@ -44,11 +43,7 @@ export async function fetchTrendingBooks(): Promise<TrendingBook[]> {
   const books: OpenLibraryWork[] = data.works;
 
   const filteredBooks = books.filter((book) => {
-    return (
-      Array.isArray(book.language) &&
-      book.language.includes("eng") &&
-      book.availability?.isbn
-    );
+    return book.availability && book.availability.isbn;
   });
 
   return filteredBooks.map((book) => ({
@@ -71,10 +66,6 @@ export async function searchGoogleBooksByISBN(
   if (!res.ok) return null;
 
   const data = await res.json();
-
-  if (data.fallback) {
-    infoNotifier("Redirected to the English edition of this book.");
-  }
 
   return data.id || null;
 }
