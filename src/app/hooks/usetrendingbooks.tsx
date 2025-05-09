@@ -1,19 +1,22 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
-import { fetchTrendingBooks } from "../lib/functions";
+import { Book } from "../lib/types";
+
+export interface ListResult {
+  list: string;
+  books: Book[];
+}
 
 export function useTrendingBooks() {
-  const {
-    data: books,
-    isLoading,
-    isError,
-  } = useQuery({
+  return useQuery<ListResult[]>({
     queryKey: ["trendingBooks"],
-    retry: 1,
-    queryFn: fetchTrendingBooks,
-    staleTime: 1000 * 60 * 60 * 6, // 6 hours
-  });
+    queryFn: async () => {
+      const res = await fetch("/api/trending");
+      if (!res.ok) throw new Error("Failed to fetch trending books");
 
-  return { books, isLoading, isError };
+      const data: { lists: ListResult[] } = await res.json();
+      return data.lists;
+    },
+    staleTime: 24 * 60 * 60 * 1000,
+    refetchOnWindowFocus: false,
+  });
 }

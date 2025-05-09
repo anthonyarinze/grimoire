@@ -27,11 +27,11 @@ export default function UserRefresher() {
     }
   }, [user, loading, dispatch]);
 
+  if (!loading) return null;
+
   return (
-    loading && (
-      <div className="fixed top-4 right-4 z-50">
-        <FaSpinner className="text-gray-500 animate-spin text-2xl" />
-      </div>
-    )
+    <div className="fixed top-4 right-4 z-50">
+      <FaSpinner className="text-gray-500 animate-spin text-2xl" />
+    </div>
   );
 }

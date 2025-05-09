@@ -62,24 +62,8 @@ export interface LibraryBooks {
   title: string;
 }
 
-export interface OpenLibraryWork {
+export interface NYTBook {
   title: string;
-  author_name?: string[];
-  cover_i?: number;
-  key: string;
-  edition_count: number;
-  first_publish_year?: number;
-  language?: string[];
-  availability: {
-    isbn: string | null;
-  };
-}
-
-export interface TrendingBook {
-  id: string;
-  title: string;
-  author: string | string[];
-  cover: string;
-  isbn: string | null;
-  language?: string[];
+  author: string;
+  primary_isbn13: string;
 }

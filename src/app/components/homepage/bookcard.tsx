@@ -1,39 +1,34 @@
+import { Book } from "@/app/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 
-interface BookCardProps {
-  book: {
-    id: string;
-    title: string;
-    author: string | string[];
-    cover: string;
-    isbn: string | null;
-  };
-}
-
-export default function BookCard({ book }: BookCardProps) {
-  const displayAuthor =
-    typeof book.author === "string"
-      ? book.author
-      : book.author?.join(", ").slice(0, 60) || "Unknown Author";
-
+export default function BookCard({ book }: { book: Book }) {
   return (
     <div className="relative">
       <Link
-        href={`/redirect/isbn/${book.isbn}`}
+        href={`/book/${book.id}`}
         className="bg-white shadow-md rounded-md w-full p-3 flex flex-col items-center cursor-pointer text-center hover:shadow-lg transition"
       >
         <Image
-          src={book.cover || "/placeholder.png"}
-          alt={book.title}
+          src={book.volumeInfo.imageLinks?.thumbnail || "/placeholder.png"}
+          alt={book.volumeInfo.title}
           width={100}
           height={150}
           className="object-cover rounded-md shadow w-[100px] h-[150px]"
         />
         <h3 className="mt-2 w-full text-sm font-medium truncate text-black">
-          {book.title}
+          {book.volumeInfo.title}
         </h3>
-        <p className="text-xs text-gray-500">{displayAuthor}</p>
+        <p className="text-xs text-gray-500">
+          {book.volumeInfo.authors?.[0] || "Unknown author"}
+        </p>
+        <span
+          className={
+            "mt-2 px-2 py-1 text-xs rounded-md bg-gray-100 text-gray-600"
+          }
+        >
+          {book.volumeInfo.categories?.[0] || "No Category"}
+        </span>
       </Link>
     </div>
   );
