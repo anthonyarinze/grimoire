@@ -9,6 +9,7 @@ import { useAppSelector } from "@/app/lib/hooks";
 import { IoClose, IoMenu } from "react-icons/io5";
 import UserPages from "../ui/userpages";
 import { successNotifier } from "@/app/lib/notifications";
+import ThemeToggle from "../ui/themetoggle";
 
 export default function Header() {
   const { logout, isPending } = useLogout();
@@ -21,7 +22,7 @@ export default function Header() {
   const closeSidebar = () => setSidebarOpen(false);
 
   const handleLogoutClick = () => {
-    setShowConfirmLogout(true); // Show confirm dialog
+    setShowConfirmLogout(true);
   };
 
   const handleConfirmLogout = async () => {
@@ -34,20 +35,26 @@ export default function Header() {
   return (
     <>
       {/* Header */}
-      <header className="h-[4.5rem] px-4 flex items-center font-black justify-between bg-white shadow-lg sticky top-0 z-50">
-        <button onClick={toggleSidebar} className="text-black">
-          <IoMenu size={28} />
-        </button>
+      <header className="h-[4.5rem] px-4 flex items-center justify-between bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-50 text-black dark:text-gray-100">
+        {/* Left: Sidebar toggle + Dark mode toggle */}
+        <div className="flex items-center gap-3">
+          <button onClick={toggleSidebar} className="text-inherit">
+            <IoMenu size={28} />
+          </button>
+          <ThemeToggle />
+        </div>
+
+        {/* Center: Search */}
         <SearchBar />
       </header>
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${
+        className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 shadow-lg transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out z-50`}
       >
-        <div className="flex items-center justify-between text-black p-4 border-b">
+        <div className="flex items-center dark:text-gray-300 justify-between text-inherit p-4 border-b border-gray-300 dark:border-gray-700">
           <Link href="/" className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">Grimoire</h1>
           </Link>

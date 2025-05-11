@@ -20,54 +20,52 @@ export default function UserPages({
 }: UserPagesProps) {
   const pathname = usePathname();
   return (
-    <>
-      <nav className="p-4 space-y-4">
-        <Link
-          href="/account"
-          className={`flex items-center gap-2 ${
-            pathname === "/account"
-              ? "text-ceruleanBlue"
-              : "text-black hover:text-ceruleanBlue"
-          }`}
-        >
-          <FaUser size={20} /> Account
-        </Link>
+    <nav className="p-4 space-y-4">
+      <Link
+        href="/account"
+        className={`flex items-center gap-2 ${
+          pathname === "/account"
+            ? "text-blue-400"
+            : "text-black dark:text-gray-100 hover:text-ceruleanBlue dark:hover:text-blue-400"
+        }`}
+      >
+        <FaUser size={20} /> Account
+      </Link>
 
-        <Link
-          href="/library"
-          className={`flex items-center gap-2 ${
-            pathname.startsWith("/library")
-              ? "text-ceruleanBlue"
-              : "text-black hover:text-ceruleanBlue"
-          }`}
-        >
-          <IoLibrary size={20} /> Library
-        </Link>
+      <Link
+        href="/library"
+        className={`flex items-center gap-2 ${
+          pathname.startsWith("/library")
+            ? "text-blue-400"
+            : "text-black dark:text-gray-100 hover:text-ceruleanBlue dark:hover:text-blue-400"
+        }`}
+      >
+        <IoLibrary size={20} /> Library
+      </Link>
 
-        {isAuthenticated ? (
-          <button
-            className="flex items-center text-black gap-2 hover:text-red-600"
-            onClick={handleLogoutClick}
-            disabled={isPending}
-          >
-            {isPending ? (
-              <FiLoader size={20} className="animate-spin" />
-            ) : (
-              <>
-                <IoIosLogOut size={20} /> Sign Out
-              </>
-            )}
-          </button>
-        ) : (
-          <Link
-            href="/auth/login"
-            className="flex items-center text-black gap-2 hover:text-green-600"
-          >
-            <MdLogin size={20} />
-            Login
-          </Link>
-        )}
-      </nav>
-    </>
+      {isAuthenticated ? (
+        <button
+          className="flex items-center gap-2 text-black dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500"
+          onClick={handleLogoutClick}
+          disabled={isPending}
+        >
+          {isPending ? (
+            <FiLoader size={20} className="animate-spin" />
+          ) : (
+            <>
+              <IoIosLogOut size={20} /> Sign Out
+            </>
+          )}
+        </button>
+      ) : (
+        <Link
+          href="/auth/login"
+          className="flex items-center gap-2 text-black dark:text-gray-100 hover:text-green-600 dark:hover:text-green-500"
+        >
+          <MdLogin size={20} />
+          Login
+        </Link>
+      )}
+    </nav>
   );
 }

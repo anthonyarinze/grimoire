@@ -9,7 +9,7 @@ import { FaRegUser } from "react-icons/fa";
 export default function UserWelcome() {
   const user = useAppSelector((state) => state.auth.user);
 
-  if (!user) return null; // Return null if user is not logged in
+  if (!user) return null;
 
   const timeOfDay = getTimeOfDay();
   return (
@@ -28,10 +28,12 @@ export default function UserWelcome() {
         </div>
       )}
       <span>
-        <h1 className="text-2xl text-black font-bold">
+        <h1 className="text-2xl text-black dark:text-gray-300 font-bold">
           Good {timeOfDay}, {user.displayName || "Bookworm"}!
         </h1>
-        <h3 className="text-lg text-black font-thin">{user.email}</h3>
+        <h3 className="text-lg text-black dark:text-gray-300 font-thin">
+          {user.email}
+        </h3>
       </span>
     </div>
   );

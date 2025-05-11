@@ -8,7 +8,6 @@ import { errorNotifier, successNotifier } from "@/app/lib/notifications";
 import LibraryCard from "@/app/components/library/librarycard";
 import { LibraryBooks } from "@/app/lib/types";
 import { queryClient } from "@/app/lib/queryClient";
-import Spinner from "../components/ui/spinner";
 import { useAppSelector } from "../lib/hooks";
 import ProtectedRoute from "../components/ui/protectedroute";
 
@@ -20,7 +19,7 @@ export default function LibraryPage() {
   const [removingBookId, setRemovingBookId] = useState<string | null>(null);
 
   // Fetch user's library
-  const { data: library = [], isLoading } = useQuery({
+  const { data: library = [] } = useQuery({
     queryKey: ["userLibrary", user?.uid],
     queryFn: async () => {
       if (!user?.uid) return [];
@@ -66,14 +65,12 @@ export default function LibraryPage() {
           (book: LibraryBooks) => book?.status === selectedFilter
         );
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
     <ProtectedRoute>
-      <div className="max-w-4xl mx-auto p-6">
-        <h1 className="text-3xl font-bold text-black mb-4">📚 My Library</h1>
+      <div className="min-h-screen mx-auto p-6 dark:bg-gray-900">
+        <h1 className="text-3xl font-bold text-black dark:text-gray-300 mb-4">
+          📚 My Library
+        </h1>
 
         {/* Filter Buttons */}
         <div className="flex space-x-3 md:text-base text-sm overflow-scroll scrollbar-hide mb-6">
@@ -81,10 +78,10 @@ export default function LibraryPage() {
             <button
               key={filter}
               onClick={() => setSelectedFilter(filter)}
-              className={`md:px-4 md:py-2 p-[0.7rem] rounded-md  font-semibold transition ${
+              className={`md:px-4 md:py-2 p-[0.7rem] rounded-md dark:brightness-95 font-semibold transition ${
                 selectedFilter === filter
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white"
+                  ? "bg-blue-500 text-white dark:text-gray-300"
+                  : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white dark:hover:text-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-blue-500"
               }`}
             >
               {filter}
@@ -108,7 +105,9 @@ export default function LibraryPage() {
             )}
           </div>
         ) : (
-          <p className="text-black">No books found in this category.</p>
+          <p className="text-black dark:text-gray-300">
+            No books found in this category.
+          </p>
         )}
       </div>
     </ProtectedRoute>

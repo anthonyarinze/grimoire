@@ -8,7 +8,7 @@ interface StatCardProps {
 
 export default function StatCard({ label, value, isLoading }: StatCardProps) {
   return (
-    <div className="bg-white shadow p-4 rounded text-center">
+    <div className="bg-white dark:bg-gray-800 shadow p-4 rounded text-center">
       {isLoading ? (
         <div className="flex justify-center items-center space-x-1 h-6">
           <div className="w-2 h-2 bg-ceruleanBlue rounded-full animate-bounce [animation-delay:-0.3s]"></div>
@@ -18,7 +18,7 @@ export default function StatCard({ label, value, isLoading }: StatCardProps) {
       ) : (
         <h2 className="text-xl font-semibold text-ceruleanBlue">{value}</h2>
       )}
-      <p className="text-sm text-gray-600">{label}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
     </div>
   );
 }

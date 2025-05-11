@@ -23,13 +23,13 @@ export default function ConfirmDialog({
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white rounded-md shadow-md p-6 max-w-sm w-full">
-        <p className="text-gray-800 mb-4">{message}</p>
+      <div className="bg-white dark:bg-gray-800 text-black dark:text-gray-200 rounded-md shadow-md p-6 max-w-sm w-full">
+        <p className="text-gray-800 dark:text-gray-200 mb-4">{message}</p>
         <div className="flex justify-end gap-3">
           <button
             onClick={onCancel}
             disabled={isPending}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white"
           >
             {cancelText}
           </button>

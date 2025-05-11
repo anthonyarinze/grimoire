@@ -7,6 +7,7 @@ import { queryClient } from "./lib/queryClient";
 import { ToastContainer } from "react-toastify";
 import AppLayout from "./components/ui/applayout";
 import UserRefresher from "./components/ui/userrefresher";
+import { ThemeProvider } from "./context/themecontext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,13 +37,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToastContainer position="top-center" autoClose={3000} />
-        <StoreProvider>
-          <QueryClientProvider client={queryClient}>
-            <UserRefresher />
-            <AppLayout>{children}</AppLayout>
-          </QueryClientProvider>
-        </StoreProvider>
+        <ThemeProvider>
+          <ToastContainer position="top-center" autoClose={3000} />
+          <StoreProvider>
+            <QueryClientProvider client={queryClient}>
+              <UserRefresher />
+              <AppLayout>{children}</AppLayout>
+            </QueryClientProvider>
+          </StoreProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -50,7 +50,7 @@ export default function EditProfileModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+      <div className="bg-white dark:bg-gray-800 text-black dark:text-gray-200 rounded-lg shadow-lg p-6 w-full max-w-md">
         <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Display Name */}
@@ -60,10 +60,10 @@ export default function EditProfileModal({
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="w-full p-2 border rounded mt-1"
+              className="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
             {!isDisplayNameValid && (
-              <p className="text-xs text-red-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Display name is required.
               </p>
             )}

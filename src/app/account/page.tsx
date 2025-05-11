@@ -16,17 +16,18 @@ export default function Account() {
 
   return (
     <ProtectedRoute>
-      <main className="p-6">
+      <main className="p-6 dark:bg-gray-900 min-h-screen">
         {/* User welcome */}
         <UserWelcome />
 
         {/* Edit profile */}
         <button
           onClick={() => setIsModalOpen(true)}
-          className="ml-4 mt-4 text-black bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+          className="ml-4 mt-4 text-black bg-gray-200 px-3 py-1 rounded hover:bg-gray-300 dark:text-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"
         >
           Edit Profile
         </button>
+
         <EditProfileModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
