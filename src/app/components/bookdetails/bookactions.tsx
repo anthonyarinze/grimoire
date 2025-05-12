@@ -116,10 +116,10 @@ export default function BookActions() {
             key={label}
             disabled={isLoading || isPending}
             onClick={() => updateBookStatus(label)}
-            className={`px-4 py-2 flex items-center gap-2 rounded-md font-semibold transition ${
+            className={`px-4 py-2 flex items-center dark:brightness-95 gap-2 rounded-md font-semibold transition ${
               bookStatus === label
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white"
+                ? "bg-blue-500 text-white dark:text-gray-300"
+                : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white dark:hover:text-gray-300"
             }`}
           >
             {icon}

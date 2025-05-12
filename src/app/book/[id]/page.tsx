@@ -38,7 +38,7 @@ export default function BookDetails() {
   if (!book) return <p className="text-red-500">No book found.</p>;
 
   return (
-    <main className="m-2 p-3 w-[95%] h-full gap-5 text-black flex flex-col">
+    <main className="h-full gap-5 dark:bg-gray-900 text-black dark:text-gray-300 p-5 flex flex-col">
       <BookHeader book={book} />
       <BookActions />
       <BookDesccription
@@ -46,7 +46,10 @@ export default function BookDetails() {
           book.volumeInfo?.description ?? "No description available."
         }
       />
-      <MoreByAuthor author={book.volumeInfo?.authors ?? ["Unknown author"]} />
+      <MoreByAuthor
+        bookId={book.id}
+        author={book.volumeInfo?.authors ?? ["Unknown author"]}
+      />
     </main>
   );
 }

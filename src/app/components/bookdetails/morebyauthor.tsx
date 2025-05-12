@@ -8,9 +8,10 @@ import { fetchBooks } from "@/app/lib/functions";
 
 interface MoreByAuthorProps {
   author: string | string[];
+  bookId: string;
 }
 
-export default function MoreByAuthor({ author }: MoreByAuthorProps) {
+export default function MoreByAuthor({ author, bookId }: MoreByAuthorProps) {
   const firstAuthor = Array.isArray(author)
     ? author[0].trim()
     : author.includes(",")
@@ -35,12 +36,12 @@ export default function MoreByAuthor({ author }: MoreByAuthorProps) {
       <h2 className="text-2xl font-semibold mb-4">More by {firstAuthor}</h2>
       <div className="overflow-x-auto scrollbar-hide">
         <div className="flex gap-4 whitespace-nowrap">
-          {books.length > 0 ? (
-            books.map((book: Book) => (
-              <MoreBooksCard key={book.id} book={book} />
-            ))
+          {books.filter((book) => book.id !== bookId).length > 0 ? (
+            books
+              .filter((book) => book.id !== bookId)
+              .map((book: Book) => <MoreBooksCard key={book.id} book={book} />)
           ) : (
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               No other books found by this author.
             </p>
           )}

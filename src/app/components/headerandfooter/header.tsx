@@ -35,7 +35,7 @@ export default function Header() {
   return (
     <>
       {/* Header */}
-      <header className="h-[4.5rem] px-4 flex items-center justify-between bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-50 text-black dark:text-gray-100">
+      <header className="h-[4.5rem] px-4 flex items-center dark:border-b dark:border-gray-700 justify-between bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-50 text-black dark:text-gray-100">
         {/* Left: Sidebar toggle + Dark mode toggle */}
         <div className="flex items-center gap-3">
           <button onClick={toggleSidebar} className="text-inherit">

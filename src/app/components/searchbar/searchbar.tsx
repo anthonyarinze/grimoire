@@ -22,7 +22,7 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search by Author, Title or ISBN"
-          className="bg-gray-200 w-[14.5rem] md:w-[18rem] text-black border-gray-300 border p-2 rounded-md text-[0.8rem] dark:bg-gray-600"
+          className="bg-gray-200 w-[14.5rem] md:w-[18rem] text-black dark:text-gray-300 border-gray-300 border p-2 rounded-md text-[0.8rem] dark:bg-gray-600"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

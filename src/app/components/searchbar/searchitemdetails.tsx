@@ -31,13 +31,13 @@ export default function SearchItemDetails({
         </h3>
 
         {/* Author */}
-        <p className="text-sm text-gray-600 truncate max-w-full">
+        <p className="text-sm text-gray-600 dark:text-gray-400 truncate max-w-full">
           {author || "Unknown Author"}
         </p>
       </div>
 
       {/* Rating, Page Count & Mature Tag */}
-      <div className="flex items-center space-x-3 text-xs text-gray-500 mt-1">
+      <div className="flex items-center space-x-3 text-xs text-gray-500 dark:text-gray-400 mt-1">
         {rating !== undefined && (
           <div className="flex items-center space-x-1">
             <FaStar className="h-4 w-4 text-yellow-500 fill-yellow-500" />
@@ -46,7 +46,7 @@ export default function SearchItemDetails({
         )}
         {pageCount && (
           <div className="flex items-center space-x-1">
-            <FaBookOpen className="h-4 w-4 text-gray-500" />
+            <FaBookOpen className="h-4 w-4 text-gray-500 dark:text-gray-400" />
             <span>{pageCount}</span>
           </div>
         )}
