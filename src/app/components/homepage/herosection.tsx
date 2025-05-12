@@ -9,7 +9,7 @@ export default function HeroSection() {
       </p>
       <Link
         href="/explore"
-        className="inline-block px-6 py-3 bg-ceruleanBlue dark:text-gray-300 font-semibold rounded hover:bg-blue-700 transition brightness-95"
+        className="inline-block px-6 py-3 bg-ceruleanBlue text-white dark:text-gray-300 font-semibold rounded hover:bg-blue-700 transition brightness-95"
       >
         Explore Books
       </Link>
