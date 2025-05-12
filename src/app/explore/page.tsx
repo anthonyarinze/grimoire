@@ -29,7 +29,7 @@ export default function Explore() {
     <main className="px-6 py-12 min-h-screen bg-gray-50 text-black dark:bg-gray-900 dark:text-gray-300">
       <h1 className="text-3xl font-bold text-start pb-3">Explore 📚</h1>
 
-      <section className="grid gird-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <section className="grid gap-4 grid-cols-2 md:grid-cols-3">
         {books.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}

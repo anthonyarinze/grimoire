@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { FaUser } from "react-icons/fa";
+import { FaHome, FaUser } from "react-icons/fa";
 import { FiLoader } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
 import { IoLibrary } from "react-icons/io5";
@@ -21,6 +21,7 @@ export default function UserPages({
   const pathname = usePathname();
 
   const navRoutes = [
+    { label: "Home", route: "/", icon: <FaHome size={20} /> },
     { label: "Account", route: "/account", icon: <FaUser size={20} /> },
     { label: "Library", route: "/library", icon: <IoLibrary size={20} /> },
     { label: "Explore", route: "/explore", icon: <MdExplore size={20} /> },
