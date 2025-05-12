@@ -103,10 +103,12 @@ export default function BookActions() {
     <>
       {/* {Full screen loading overlay} */}
       {isPending && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-60 flex justify-center items-center">
           <div className="flex flex-col items-center">
-            <FaSpinner className="text-white text-4xl animate-spin" />
-            <p className="text-white mt-2 z-50">Updating library...</p>
+            <FaSpinner className="text-white text-4xl animate-spin dark:text-gray-400" />
+            <p className="text-white mt-2 z-50 dark:text-gray-400">
+              Updating library...
+            </p>
           </div>
         </div>
       )}

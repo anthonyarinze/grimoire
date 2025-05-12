@@ -12,7 +12,7 @@ export default function MoreBooksCard({ book }: MoreBooksCardProps) {
     <>
       {book.id ? (
         <BookLink bookId={book.id}>
-          <div className="text-wrap items-center flex flex-col w-[150px] h-auto text-center shrink-0 bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg p-2 transition transform hover:scale-105 hover:brightness-105">
+          <div className="text-wrap items-center flex flex-col w-[150px] h-auto text-center shrink-0 bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg p-2">
             <Image
               src={book.volumeInfo.imageLinks?.thumbnail || "/placeholder.png"}
               alt={book.volumeInfo.title}

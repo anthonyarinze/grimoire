@@ -5,7 +5,7 @@ import { FaUser } from "react-icons/fa";
 import { FiLoader } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
 import { IoLibrary } from "react-icons/io5";
-import { MdLogin } from "react-icons/md";
+import { MdExplore, MdLogin } from "react-icons/md";
 
 interface UserPagesProps {
   isAuthenticated: boolean;
@@ -19,29 +19,28 @@ export default function UserPages({
   handleLogoutClick,
 }: UserPagesProps) {
   const pathname = usePathname();
+
+  const navRoutes = [
+    { label: "Account", route: "/account", icon: <FaUser size={20} /> },
+    { label: "Library", route: "/library", icon: <IoLibrary size={20} /> },
+    { label: "Explore", route: "/explore", icon: <MdExplore size={20} /> },
+  ];
+
   return (
     <nav className="p-4 space-y-4">
-      <Link
-        href="/account"
-        className={`flex items-center gap-2 ${
-          pathname === "/account"
-            ? "text-blue-400"
-            : "text-black dark:text-gray-100 hover:text-ceruleanBlue dark:hover:text-blue-400"
-        }`}
-      >
-        <FaUser size={20} /> Account
-      </Link>
-
-      <Link
-        href="/library"
-        className={`flex items-center gap-2 ${
-          pathname.startsWith("/library")
-            ? "text-blue-400"
-            : "text-black dark:text-gray-100 hover:text-ceruleanBlue dark:hover:text-blue-400"
-        }`}
-      >
-        <IoLibrary size={20} /> Library
-      </Link>
+      {navRoutes.map((nav) => (
+        <Link
+          key={nav.label}
+          href={nav.route}
+          className={`flex items-center gap-2 ${
+            pathname.startsWith(nav.route)
+              ? "text-blue-400"
+              : "text-black dark:text-gray-100 hover:text-ceruleanBlue dark:hover:text-blue-400"
+          }`}
+        >
+          {nav.icon} {nav.label}
+        </Link>
+      ))}
 
       {isAuthenticated ? (
         <button
