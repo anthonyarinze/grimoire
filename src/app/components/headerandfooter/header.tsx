@@ -56,7 +56,7 @@ export default function Header() {
       >
         <div className="flex items-center dark:text-gray-300 text-black justify-between text-inherit p-4 border-b border-gray-300 dark:border-gray-700">
           <Link href="/" className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold">Grimoire</h1>
+            <h1 className="text-2xl text-black font-bold">Grimoire</h1>
           </Link>
           <button onClick={closeSidebar}>
             <IoClose size={24} />
