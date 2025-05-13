@@ -83,7 +83,7 @@ export default function BookPreview({ book }: BookPreviewProps) {
 
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-            <div className="relative bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full max-w-3xl h-[85vh] flex flex-col">
+            <div className="relative bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full max-w-3xl h-[80vh] flex flex-col">
               <button
                 onClick={() => setShowModal(false)}
                 className="absolute top-4 right-3 text-gray-500 hover:text-red-500 text-xl font-bold z-10"
