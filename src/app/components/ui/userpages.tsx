@@ -21,7 +21,7 @@ export default function UserPages({
   const pathname = usePathname();
 
   const navRoutes = [
-    { label: "Home", route: "/", icon: <FaHome size={20} /> },
+    { label: "Home", route: "/home", icon: <FaHome size={20} /> },
     { label: "Account", route: "/account", icon: <FaUser size={20} /> },
     { label: "Library", route: "/library", icon: <IoLibrary size={20} /> },
     { label: "Explore", route: "/explore", icon: <MdExplore size={20} /> },
