@@ -29,26 +29,24 @@ export default function UserPages({
 
   return (
     <nav className="p-4 space-y-4">
-  {navRoutes.map((nav) => {
-  const isActive =
-    nav.route === "/"
-      ? pathname === "/" // exact match for Home
-      : pathname.startsWith(nav.route);
+      {navRoutes.map((nav) => {
+        const isActive =
+          nav.route === "/" ? pathname === "/" : pathname.startsWith(nav.route);
 
-  return (
-    <Link
-      key={nav.label}
-      href={nav.route}
-      className={`flex items-center gap-2 ${
-        isActive
-          ? "text-blue-400"
-          : "text-black dark:text-gray-100 hover:text-ceruleanBlue dark:hover:text-blue-400"
-      }`}
-    >
-      {nav.icon} {nav.label}
-    </Link>
-  );
-})}
+        return (
+          <Link
+            key={nav.label}
+            href={nav.route}
+            className={`flex items-center gap-2 ${
+              isActive
+                ? "text-blue-400"
+                : "text-black dark:text-gray-100 hover:text-ceruleanBlue dark:hover:text-blue-400"
+            }`}
+          >
+            {nav.icon} {nav.label}
+          </Link>
+        );
+      })}
 
       {isAuthenticated ? (
         <button

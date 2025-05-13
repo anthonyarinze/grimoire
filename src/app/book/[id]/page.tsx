@@ -1,5 +1,6 @@
 "use client";
 
+import BookPreview from "@/app/components/book/bookpreview";
 import BookActions from "@/app/components/bookdetails/bookactions";
 import BookDesccription from "@/app/components/bookdetails/bookdescription";
 import BookHeader from "@/app/components/bookdetails/bookheader";
@@ -41,6 +42,7 @@ export default function BookDetails() {
     <main className="h-full gap-5 dark:bg-gray-900 text-black dark:text-gray-300 p-5 flex flex-col">
       <BookHeader book={book} />
       <BookActions />
+      <BookPreview book={book} />
       <BookDesccription
         description={
           book.volumeInfo?.description ?? "No description available."
@@ -53,3 +55,4 @@ export default function BookDetails() {
     </main>
   );
 }
+// 9781847651402

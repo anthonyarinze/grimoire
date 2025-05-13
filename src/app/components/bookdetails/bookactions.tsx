@@ -105,7 +105,7 @@ export default function BookActions() {
       {isPending && (
         <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-60 flex justify-center items-center">
           <div className="flex flex-col items-center">
-            <FaSpinner className="text-white text-4xl animate-spin dark:text-gray-400" />
+            <FaSpinner className="text-white text-4xl animate-spin" />
             <p className="text-white mt-2 z-50 dark:text-gray-400">
               Updating library...
             </p>
@@ -120,7 +120,7 @@ export default function BookActions() {
             onClick={() => updateBookStatus(label)}
             className={`px-4 py-2 flex items-center dark:brightness-95 gap-2 rounded-md font-semibold transition ${
               bookStatus === label
-                ? "bg-blue-500 text-white dark:text-gray-300"
+                ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white dark:hover:text-gray-300"
             }`}
           >

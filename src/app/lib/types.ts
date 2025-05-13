@@ -4,6 +4,21 @@
 export interface Book {
   etag: string;
   id: string;
+  accessInfo?: {
+    country: string;
+    viewability: string;
+    embeddable: boolean;
+    publicDomain: boolean;
+    epub?: {
+      isAvailable: boolean;
+    };
+    pdf?: {
+      isAvailable: boolean;
+    };
+    webReaderLink: string;
+    accessViewStatus: string;
+    quoteSharingAllowed: boolean;
+  };
   volumeInfo: {
     title: string;
     authors?: string[]; // Optional, as some books may not have authors listed

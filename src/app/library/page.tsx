@@ -10,6 +10,7 @@ import { LibraryBooks } from "@/app/lib/types";
 import { queryClient } from "@/app/lib/queryClient";
 import { useAppSelector } from "../lib/hooks";
 import ProtectedRoute from "../components/ui/protectedroute";
+import Spinner from "../components/ui/spinner";
 
 const filters = ["All", "Want to Read", "Reading", "Finished"];
 
@@ -19,7 +20,7 @@ export default function LibraryPage() {
   const [removingBookId, setRemovingBookId] = useState<string | null>(null);
 
   // Fetch user's library
-  const { data: library = [] } = useQuery({
+  const { data: library = [], isLoading } = useQuery({
     queryKey: ["userLibrary", user?.uid],
     queryFn: async () => {
       if (!user?.uid) return [];
@@ -64,6 +65,8 @@ export default function LibraryPage() {
       : library?.filter(
           (book: LibraryBooks) => book?.status === selectedFilter
         );
+
+  if (isLoading) <Spinner />;
 
   return (
     <ProtectedRoute>
