@@ -1,6 +1,6 @@
 "use client";
 
-import BookPreview from "@/app/components/book/bookpreview";
+import BookPreview from "@/app/components/bookdetails/bookpreview";
 import BookActions from "@/app/components/bookdetails/bookactions";
 import BookDesccription from "@/app/components/bookdetails/bookdescription";
 import BookHeader from "@/app/components/bookdetails/bookheader";

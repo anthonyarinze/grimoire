@@ -1,5 +1,8 @@
 // TypeScript interfaces for the Google Books API response and user state
 // and for the library books in Firestore
+
+import { FieldValue } from "firebase/firestore";
+
 // and for the open library api call
 export interface Book {
   etag: string;
@@ -68,13 +71,15 @@ export interface UserState {
 }
 
 export interface LibraryBooks {
-  addedAt: string;
+  id: string;
+  title: string;
   authors: string[];
   cover: string;
-  id: string;
-  lastModified: string;
   status: string;
-  title: string;
+  addedAt: string | FieldValue; // Firestore timestamp
+  lastModified: string | FieldValue;
+  uploaded?: boolean;
+  progress?: number; // for tracking reading %
 }
 
 export interface NYTBook {

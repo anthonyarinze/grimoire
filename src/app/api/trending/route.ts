@@ -48,8 +48,7 @@ export async function GET() {
 
     const filtered = results.filter(Boolean);
     return NextResponse.json({ lists: filtered });
-  } catch (err) {
-    console.error("NYT fetch error", err);
+  } catch {
     return new NextResponse("Failed to fetch trending books", { status: 500 });
   }
 }

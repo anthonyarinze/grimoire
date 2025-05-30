@@ -49,6 +49,7 @@ export default function BookPreview({ book }: BookPreviewProps) {
     }
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       viewerRef.current?.replaceChildren(); // Clean up viewer DOM
     };
   }, [showModal, isbn]);
