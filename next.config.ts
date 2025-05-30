@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -11,7 +10,7 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
-        protocol: "http", // <- add this too!
+        protocol: "http",
         hostname: "books.google.com",
         pathname: "/**",
       },
@@ -22,6 +21,20 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+  },
+
+  webpack: (config, { isServer }) => {
+    // Prevent canvas and encoding modules from resolving on server
+    config.resolve = {
+      ...config.resolve,
+      alias: {
+        ...(config.resolve.alias || {}),
+        canvas: false,
+        encoding: false,
+      },
+    };
+
+    return config;
   },
 };
 
