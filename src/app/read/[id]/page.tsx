@@ -12,6 +12,7 @@ import Spinner from "@/app/components/ui/spinner";
 const PDFViewer = dynamic(() => import("@/app/components/viewers/pdfviewer"), {
   ssr: false,
 });
+
 const EpubViewer = dynamic(
   () => import("@/app/components/viewers/epubviewer"),
   {
