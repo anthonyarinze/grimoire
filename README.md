@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 Grimoire – Your Personal Book Companion
 
-## Getting Started
+Grimoire is a modern web application for book lovers. Search, discover, track your reading, and now upload your favorite EPUB and PDF books to read right on the site. It’s your personalized reading dashboard – complete with trends, goals, and library organization.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 🔍 **Search Books** – Find books using the Google Books API.
+- 📈 **Trending Books** – Discover daily trending reads via the NYT Books API.
+- 📚 **Personal Library** – Organize your books by reading status (Want to Read, Reading, Finished).
+- 🎯 **Reading Goals** – Set and track a yearly reading goal.
+- 🔐 **Authentication** – Sign in with Google or email/password using Firebase Auth.
+- 🗃 **File Uploads** – Upload your own EPUBs and PDFs to your library (Cloudflare R2 storage).
+- 📖 **Built-in Reader** – Read your uploaded books with in-browser PDF and EPUB viewers.
+- 🛠 **User Account Page** – Manage your profile and view stats like total books and progress.
+- 💬 **What’s New Banner** – Get notified about new features (shows once per user).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧱 Built With
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js (App Router)](https://nextjs.org/)
+- **Authentication**: [Firebase Auth](https://firebase.google.com/products/auth)
+- **Database**: [Firebase Firestore](https://firebase.google.com/products/firestore)
+- **Storage**: [Cloudflare R2](https://www.cloudflare.com/products/r2/)
+- **Book APIs**: [Google Books API](https://developers.google.com/books), [NYT Books API](https://developer.nytimes.com/docs/books-product/1/overview)
+- **PDF Viewer**: [@react-pdf-viewer/core](https://react-pdf-viewer.dev/)
+- **EPUB Viewer**: [epub.js](https://github.com/futurepress/epub.js)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+🧙‍♂️ Author
+Anthony – Reader
+Website: https://saintanthony.netlify.app
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📄 License
+MIT License
